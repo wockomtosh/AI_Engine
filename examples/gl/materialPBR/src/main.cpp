@@ -12,7 +12,11 @@ int main( ){
 	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
 	
 	auto window = ofCreateWindow(settings);
+<<<<<<< HEAD:examples/gl/materialPBR/src/main.cpp
 	
+=======
+
+>>>>>>> 8d5c89e (Adding scripts file):scripts/templates/emscripten/src/main.cpp
 	ofRunApp(window, make_shared<ofApp>());
 	ofRunMainLoop();
 
