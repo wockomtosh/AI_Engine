@@ -6,7 +6,7 @@ int main( ){
 
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;
-	settings.setSize(1024, 768);
+	settings.setSize(ofApp::WINDOW_WIDTH, ofApp::WINDOW_HEIGHT);
 	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
 	settings.title = "Jake's AI";
 

@@ -104,11 +104,21 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AIClasses\AISystem.cpp" />
+    <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
+    <ClCompile Include="src\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AIClasses\AISystem.h" />
+    <ClInclude Include="src\AIClasses\DynamicSeek.h" />
+    <ClInclude Include="src\AIClasses\KinematicSeek.h" />
+    <ClInclude Include="src\DataTypes\Rigidbody.h" />
+    <ClInclude Include="src\DataTypes\Vector2.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

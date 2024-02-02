@@ -1,24 +1,63 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<ClCompile Include="src\ofApp.cpp">
-			<Filter>src</Filter>
-		</ClCompile>
-		<ClCompile Include="src\main.cpp">
-			<Filter>src</Filter>
-		</ClCompile>
-	</ItemGroup>
-	<ItemGroup>
-		<Filter Include="src">
-			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-		</Filter>
-	</ItemGroup>
-	<ItemGroup>
-		<ClInclude Include="src\ofApp.h">
-			<Filter>src</Filter>
-		</ClInclude>
-	</ItemGroup>
-	<ItemGroup>
-		<ResourceCompile Include="icon.rc" />
-	</ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataTypes\Vector2.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\AISystem.cpp">
+      <Filter>src\AIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\KinematicSeek.cpp">
+      <Filter>src\AIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses">
+      <UniqueIdentifier>{843777ae-4dca-4ba9-8899-05e0ab0dcf92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DataTypes">
+      <UniqueIdentifier>{54b863da-575f-4445-a942-70660c1e611b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Renderer">
+      <UniqueIdentifier>{652d72ce-4898-4960-a453-187532402c1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTypes\Rigidbody.h">
+      <Filter>src\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTypes\Vector2.h">
+      <Filter>src\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\KinematicSeek.h">
+      <Filter>src\AIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicSeek.h">
+      <Filter>src\AIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\AISystem.h">
+      <Filter>src\AIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
 </Project>

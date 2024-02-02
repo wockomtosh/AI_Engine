@@ -20,5 +20,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
+		static const int WINDOW_WIDTH = 1024;
+		static const int WINDOW_HEIGHT = 768;
 		
 };
