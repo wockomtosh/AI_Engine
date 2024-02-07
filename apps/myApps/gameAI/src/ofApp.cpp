@@ -1,19 +1,19 @@
 #include "ofApp.h"
-#include "DataTypes/Rigidbody.h"
 #include "AIClasses/KinematicSeek.h"
 #include "Renderer/Renderer.h"
+#include "Components/Rigidbody.h"
 
 ofImage boid;
 ofImage breadcrumb;
 
+uint64_t prevTime = 0;
+float dt = 0;
+
 KinematicSeek* kSeek;
 
-Rigidbody** boids;
-int numBoids;
-const int MAX_BOIDS = 10;
+std::vector<Rigidbody*> boids;
 
-Rigidbody** breadcrumbs;
-int numBreadcrumbs = 0;
+std::vector<Rigidbody*> breadcrumbs;
 const int MAX_BREADCRUMBS = 30;
 float breadcrumbTimer = 0;
 float breadcrumbInterval = 1;
@@ -21,18 +21,35 @@ float breadcrumbInterval = 1;
 int displayMode = 1;
 
 //--------------------------------------------------------------
+void getTick()
+{
+	uint64_t countsPerSecond = 0;
+	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSecond);
+
+	uint64_t curTime = 0;
+	QueryPerformanceCounter((LARGE_INTEGER*)&curTime);
+	
+	//Divide the number of counts that have passed by counts per second to get seconds
+	dt = (curTime - prevTime) / (float)countsPerSecond;
+
+	prevTime = curTime;
+}
+
+//--------------------------------------------------------------
 void ofApp::setup(){
 	boid.load("images/boid.png");
 	breadcrumb.load("images/breadcrumb.png");
 	std::cout << "Press keys 1-7 to select that part of the assignment\n";
 
-	//I'll allocate enough for 20 breadcrumbs, if we have more then I'll start replacing breadcrumbs
-	breadcrumbs = static_cast<Rigidbody**>(malloc(sizeof(Rigidbody) * MAX_BREADCRUMBS));
+	//Start tick
+	QueryPerformanceCounter((LARGE_INTEGER*) &prevTime);
+
+	//Setup breadcrumbs
+	breadcrumbs = vector<Rigidbody*>();
 
 	//Single boid setup
-	boids = static_cast<Rigidbody**>(malloc(sizeof(Rigidbody) * MAX_BOIDS));
-	boids[0] = new Rigidbody();
-	numBoids = 1;
+	boids = vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
 
 	//kinematic seek setup
 	boids[0]->position = Vector2(80, 700);
@@ -61,7 +78,7 @@ void ofApp::update(){
 	//I also need a renderer. I need to have a list of gameObjects somewhere so that I can render them after they've been modified by the AI system.
 	//Should each gameObject have a generic AI component? Or should that be split into multiple components?
 	
-	float dt = .0167;
+	getTick();
 
 	switch (displayMode) {
 	case 1:
@@ -69,11 +86,11 @@ void ofApp::update(){
 		break;
 
 	case 2:
-		boids[0]->update(.0167, {Vector2(10,10), 10});
+		boids[0]->update(dt, {Vector2(10,10), 10});
 		break;
 
 	default:
-		boids[0]->update(.0167, { Vector2(0,0), 0 });
+		boids[0]->update(dt, { Vector2(-10,0), -10 });
 		break;
 	}
 
@@ -81,35 +98,28 @@ void ofApp::update(){
 	if (breadcrumbTimer > breadcrumbInterval) {
 		breadcrumbTimer = 0;
 
-		//TODO overwrite old breadcrumbs?
-		if (numBreadcrumbs >= MAX_BREADCRUMBS) {
-		//	//TODO this isn't super clean and could get annoying later
-		//	numBreadcrumbs = 0;
-		//	delete breadcrumbs[numBreadcrumbs]
-			
-		}
-		else {
-			Rigidbody* newCrumb = new Rigidbody();
-			newCrumb->position = boids[0]->position;
-			newCrumb->orientation = boids[0]->orientation;
-			breadcrumbs[numBreadcrumbs] = newCrumb;
-			numBreadcrumbs++;
+		Rigidbody* newCrumb = new Rigidbody();
+		newCrumb->position = boids[0]->position;
+		newCrumb->orientation = boids[0]->orientation;
+		breadcrumbs.push_back(newCrumb);
+
+		//overwrite old breadcrumbs?
+		if (breadcrumbs.size() >= MAX_BREADCRUMBS) {
+			breadcrumbs.erase(breadcrumbs.begin());
 		}
 	}
-
-	//TODO get some sort of tick/delta time.
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor(180, 180, 180));
 
-	for (int i = 0; i < numBreadcrumbs; i++) {
-		Renderer::drawRigidbody(breadcrumb, breadcrumbs[i]);
+	for (int i = 0; i < breadcrumbs.size(); i++) {
+		Renderer::draw(breadcrumb, breadcrumbs[i]);
 	}
 
-	for (int i = 0; i < numBoids; i++) {
-		Renderer::drawRigidbody(boid, boids[i]);
+	for (int i = 0; i < boids.size(); i++) {
+		Renderer::draw(boid, boids[i]);
 	}
 }
 

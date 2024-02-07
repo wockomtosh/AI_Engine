@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-void Renderer::drawRigidbody(ofImage sprite, Rigidbody* body)
+void Renderer::draw(ofImage sprite, Rigidbody* body)
 {
 	//ofPushMatrix ~= glPushMatrix()
 	//I may need to refresh my memory from CS355 to get this down that same way. I could do 3D that way but let's not get carried away just yet...

@@ -1,8 +1,7 @@
 #pragma once
 #include <ofMain.h>
-#include "../DataTypes/Rigidbody.h"
+#include "../Components/Rigidbody.h"
 
-class Renderer {
-public:
-	static void drawRigidbody(ofImage sprite, Rigidbody* body);
+namespace Renderer {
+	void draw(ofImage sprite, Rigidbody* body);
 };

@@ -1,5 +1,5 @@
 #pragma once
-#include "../DataTypes/Rigidbody.h"
+#include "../Components/Rigidbody.h"
 
 class KinematicSeek {
 

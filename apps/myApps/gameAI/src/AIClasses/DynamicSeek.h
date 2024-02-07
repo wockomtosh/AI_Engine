@@ -1,7 +1,11 @@
 #pragma once
-#include "../DataTypes/Rigidbody.h"
+#include "ISteeringBehavior.h"
 
-class DynamicSeek {
+class DynamicSeek : ISteeringBehavior {
+
+
 public:
-	SteeringOutput getSteering();
+	DynamicSeek();
+	~DynamicSeek();
+	Acceleration getSteering();
 };

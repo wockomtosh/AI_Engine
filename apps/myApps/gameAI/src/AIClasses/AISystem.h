@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../DataTypes/Rigidbody.h"
+#include "../Components/Rigidbody.h"
 
 class AISystem {
 	Rigidbody** rigidbodies = nullptr;
