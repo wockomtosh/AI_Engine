@@ -1,4 +1,5 @@
 #include "Rigidbody.h"
+#include <corecrt_math.h>
 
 void Rigidbody::update(float dt, Acceleration acceleration) {
 
@@ -47,7 +48,7 @@ void Rigidbody::update(float dt, Acceleration acceleration) {
 	}
 }
 
-float getOrientationOfMovement()
+float Rigidbody::getOrientationOfMovement()
 {
-	return 0;
+	return atan2(velocity.y, velocity.x) * (180 / 3.1415);
 }

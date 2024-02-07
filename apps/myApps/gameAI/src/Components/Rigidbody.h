@@ -9,6 +9,7 @@ static const int WINDOW_HEIGHT = 768;
 struct Acceleration {
 	Vector2 linear;
 	float angular;
+	Acceleration(Vector2 linear, float angular) : linear(linear), angular(angular) {}
 };
 
 struct Rigidbody {
@@ -18,6 +19,8 @@ struct Rigidbody {
 	float rotation = 0;
 	float maxSpeed = 100;
 	float maxRotation = 100;
+
+	~Rigidbody() {}
 
 	void update(float dt, Acceleration acceleration);
 	float getOrientationOfMovement();

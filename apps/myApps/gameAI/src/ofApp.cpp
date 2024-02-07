@@ -1,7 +1,10 @@
 #include "ofApp.h"
-#include "AIClasses/KinematicSeek.h"
 #include "Renderer/Renderer.h"
 #include "Components/Rigidbody.h"
+#include "AIClasses/AISystem.h"
+#include "AIClasses/KinematicSeek.h"
+#include "AIClasses/DynamicSeek.h"
+#include "AIClasses/DynamicArrive.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -11,6 +14,8 @@ float dt = 0;
 
 KinematicSeek* kSeek;
 
+AISystem* AI;
+
 std::vector<Rigidbody*> boids;
 
 std::vector<Rigidbody*> breadcrumbs;
@@ -18,7 +23,9 @@ const int MAX_BREADCRUMBS = 30;
 float breadcrumbTimer = 0;
 float breadcrumbInterval = 1;
 
-int displayMode = 1;
+Vector2 clickTarget = Vector2::NULL_VECTOR;
+
+int displayMode;
 
 //--------------------------------------------------------------
 void getTick()
@@ -36,16 +43,9 @@ void getTick()
 }
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-	boid.load("images/boid.png");
-	breadcrumb.load("images/breadcrumb.png");
-	std::cout << "Press keys 1-7 to select that part of the assignment\n";
-
-	//Start tick
-	QueryPerformanceCounter((LARGE_INTEGER*) &prevTime);
-
-	//Setup breadcrumbs
-	breadcrumbs = vector<Rigidbody*>();
+void setupKinematic()
+{
+	displayMode = 1;
 
 	//Single boid setup
 	boids = vector<Rigidbody*>();
@@ -54,30 +54,125 @@ void ofApp::setup(){
 	//kinematic seek setup
 	boids[0]->position = Vector2(80, 700);
 	kSeek = new KinematicSeek(boids[0]);
+}
 
+void setupSeek()
+{
+	displayMode = 2;
 
-	//Testing how to change the color of a boid for later. 
-	//Right now this iterates over every pixel so that it can ignore the transparent pixels.
-	/*for (int i = 0; i < boid.getWidth(); i++)
+	//Single boid setup
+	boids = vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	//dynamic seek setup
+	boids[0]->position = Vector2(80, 700);
+	AIComponent* ai = new AIComponent();
+	ai->body = boids[0];
+	Vector2 target = clickTarget;
+	if (target == Vector2::NULL_VECTOR)
 	{
-		for (int j = 0; j < boid.getHeight(); j++) 
-		{
-			if (boid.getPixels().getColor(i, j) == ofColor(0, 0, 0)) 
-			{
-				boid.setColor(i, j, ofColor(255, 255, 255));
-			}
-		}
+		target = Vector2(300, 300);
 	}
-	boid.update();*/
+	ai->behavior = new DynamicSeek(target, ai);
+	ai->maxAccel = 20;
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else 
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
+void setupArrive1()
+{
+	displayMode = 3;
+
+	//Single boid setup
+	boids = vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	//dynamic arrive setup
+	boids[0]->position = Vector2(80, 700);
+	AIComponent* ai = new AIComponent();
+	ai->body = boids[0];
+	Vector2 target = clickTarget;
+	if (target == Vector2::NULL_VECTOR)
+	{
+		target = Vector2(300, 300);
+	}
+	ai->behavior = new DynamicArrive(ai, target);
+	ai->maxAccel = 20;
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
+void setupArrive2()
+{
+	displayMode = 4;
+
+	//Single boid setup
+	boids = vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	//dynamic arrive setup
+	boids[0]->position = Vector2(80, 700);
+	AIComponent* ai = new AIComponent();
+	ai->body = boids[0];
+	Vector2 target = clickTarget;
+	if (target == Vector2::NULL_VECTOR)
+	{
+		target = Vector2(300, 300);
+	}
+	ai->behavior = new DynamicArrive(ai, target);
+	ai->maxAccel = 20;
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
+void ofApp::setup(){
+	boid.load("images/boid.png");
+	breadcrumb.load("images/breadcrumb.png");
+	std::cout << "Press keys 1-8 to select that part of the assignment\n";
+
+	//Start tick
+	QueryPerformanceCounter((LARGE_INTEGER*) &prevTime);
+
+	//Setup breadcrumbs
+	breadcrumbs = vector<Rigidbody*>();
+
+	setupArrive1();
+
+	//TODO find memory leaks?
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	//I want an AI::update() to get called. Should that be a static class with an update? Should the AI system be a class on its own that I set up?
-	//Should I have multiple AI classes that inherit from a base class to change behaviors? How do I set up these AI systems?
-	//I also need a renderer. I need to have a list of gameObjects somewhere so that I can render them after they've been modified by the AI system.
-	//Should each gameObject have a generic AI component? Or should that be split into multiple components?
-	
 	getTick();
 
 	switch (displayMode) {
@@ -85,12 +180,8 @@ void ofApp::update(){
 		kSeek->updateRigidbody(dt);
 		break;
 
-	case 2:
-		boids[0]->update(dt, {Vector2(10,10), 10});
-		break;
-
 	default:
-		boids[0]->update(dt, { Vector2(-10,0), -10 });
+		AI->update(dt);
 		break;
 	}
 
@@ -103,7 +194,7 @@ void ofApp::update(){
 		newCrumb->orientation = boids[0]->orientation;
 		breadcrumbs.push_back(newCrumb);
 
-		//overwrite old breadcrumbs?
+		//overwrite old breadcrumbs
 		if (breadcrumbs.size() >= MAX_BREADCRUMBS) {
 			breadcrumbs.erase(breadcrumbs.begin());
 		}
@@ -125,21 +216,36 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	//TODO Implement 1-7 key presses for the different behaviors that I'll want to run.
-	//TODO Implement setup calls here to reset the boid(s)
 	switch (key) {
 	case '1':
-		displayMode = 1;
+		setupKinematic();
 		break;
 	case '2':
-		displayMode = 2;
+		setupSeek();
 		break;
 	case '3':
-		displayMode = 3;
+		setupArrive1();
+		break;
+	case '4':
+		setupArrive2();
+		break;
+	case '5':
+		displayMode = 5;
+		//Wander1
+		break;
+	case '6':
+		displayMode = 6;
+		//Wander2
+		break;
+	case '7':
+		displayMode = 7;
+		//Wander3
+		break;
+	case '8':
+		displayMode = 8;
+		//Flocking
 		break;
 	}
-		
-
 }
 
 //--------------------------------------------------------------
@@ -159,7 +265,24 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+	//Setup clickTarget
+	clickTarget = Vector2(x, y);
+	if (AI) {
+		switch (displayMode)
+		{
+		case 1:
+			break;
+		case 2:
+			delete AI->getAIObjects()[0]->behavior; //Are these actually necessary? Some testing without them didn't seem to bring up any issues
+			AI->getAIObjects()[0]->behavior = new DynamicSeek(clickTarget, AI->getAIObjects()[0]);
+			break;
+		case 3:
+			delete AI->getAIObjects()[0]->behavior;
+			AI->getAIObjects()[0]->behavior = new DynamicArrive(AI->getAIObjects()[0], clickTarget);
+			break;
+		}
+	}
+	
 }
 
 //--------------------------------------------------------------
@@ -191,3 +314,17 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+//Testing how to change the color of a boid for later. 
+	//Right now this iterates over every pixel so that it can ignore the transparent pixels.
+	/*for (int i = 0; i < boid.getWidth(); i++)
+	{
+		for (int j = 0; j < boid.getHeight(); j++)
+		{
+			if (boid.getPixels().getColor(i, j) == ofColor(0, 0, 0))
+			{
+				boid.setColor(i, j, ofColor(255, 255, 255));
+			}
+		}
+	}
+	boid.update();*/

@@ -1,14 +1,18 @@
 #pragma once
 
-#include "../Components/Rigidbody.h"
+#include "../Components/AIComponent.h"
+#include <vector>
 
 class AISystem {
-	Rigidbody** rigidbodies = nullptr;
-	int numRigidbodies = 0;
-
+	std::vector<AIComponent*> aiObjects;
 
 public:
-	AISystem(Rigidbody** rigidbodies, int numRigidbodies);
+	AISystem(std::vector<AIComponent*> aiObjects);
+	~AISystem();
 
-	void update();
+	void update(float dt);
+
+	std::vector<AIComponent*> getAIObjects();
+
+	void replaceAIObjects(std::vector<AIComponent*> newAIObjects);
 };

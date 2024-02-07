@@ -1,15 +1,28 @@
 #include "AISystem.h"
 
-AISystem::AISystem(Rigidbody** rigidbodies, int numRigidbodies) : 
-	rigidbodies(rigidbodies), numRigidbodies(numRigidbodies)
+AISystem::AISystem(std::vector<AIComponent*> aiObjects) :
+	aiObjects(aiObjects)
 {
 }
 
-void AISystem::update()
+AISystem::~AISystem()
 {
-	for (int i = 0; i < numRigidbodies; i++)
+}
+
+void AISystem::update(float dt)
+{
+	for (int i = 0; i < aiObjects.size(); i++)
 	{
-		//GET STEERING FOR EACH RIGIDBODY
-		//rigidbodies[i]->update(.0167, )
+		aiObjects[i]->update(dt);
 	}
+}
+
+std::vector<AIComponent*> AISystem::getAIObjects()
+{
+	return aiObjects;
+}
+
+void AISystem::replaceAIObjects(std::vector<AIComponent*> newAIObjects)
+{
+	aiObjects = newAIObjects;
 }

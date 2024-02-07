@@ -42,6 +42,7 @@ public:
 	static const Vector2 Down;
 	static const Vector2 Left;
 	static const Vector2 Right;
+	static const Vector2 NULL_VECTOR;
 };
 
 Vector2 operator+(Vector2 lhs, Vector2 rhs);

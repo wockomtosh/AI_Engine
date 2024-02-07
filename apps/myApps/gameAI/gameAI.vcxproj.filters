@@ -13,17 +13,20 @@
     <ClCompile Include="src\AIClasses\AISystem.cpp">
       <Filter>src\AIClasses</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\KinematicSeek.cpp">
-      <Filter>src\AIClasses</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer\Renderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\DynamicSeek.cpp">
-      <Filter>src\AIClasses</Filter>
-    </ClCompile>
     <ClCompile Include="src\Components\Rigidbody.cpp">
       <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicArrive.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicSeek.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\KinematicSeek.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +45,9 @@
     <Filter Include="src\Components">
       <UniqueIdentifier>{7f45020a-0606-4bd5-9540-2631b3128fef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\AIClasses\SteeringClasses">
+      <UniqueIdentifier>{cc191380-c59b-4362-98c7-1a2058670e5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -50,26 +56,29 @@
     <ClInclude Include="src\DataTypes\Vector2.h">
       <Filter>src\DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\KinematicSeek.h">
-      <Filter>src\AIClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicSeek.h">
-      <Filter>src\AIClasses</Filter>
-    </ClInclude>
     <ClInclude Include="src\AIClasses\AISystem.h">
       <Filter>src\AIClasses</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\Renderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\ISteeringBehavior.h">
-      <Filter>src\AIClasses</Filter>
-    </ClInclude>
     <ClInclude Include="src\Components\Rigidbody.h">
       <Filter>src\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\AIComponent.h">
       <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicArrive.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicSeek.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\KinematicSeek.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\ISteeringBehavior.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
