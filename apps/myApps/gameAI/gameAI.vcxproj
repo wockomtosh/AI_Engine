@@ -105,6 +105,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AIClasses\AISystem.cpp" />
+    <ClCompile Include="src\AIClasses\DynamicAlign.cpp" />
     <ClCompile Include="src\AIClasses\DynamicArrive.cpp" />
     <ClCompile Include="src\AIClasses\DynamicSeek.cpp" />
     <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AIClasses\AISystem.h" />
+    <ClInclude Include="src\AIClasses\DynamicAlign.h" />
     <ClInclude Include="src\AIClasses\DynamicArrive.h" />
     <ClInclude Include="src\AIClasses\DynamicSeek.h" />
     <ClInclude Include="src\AIClasses\KinematicSeek.h" />
