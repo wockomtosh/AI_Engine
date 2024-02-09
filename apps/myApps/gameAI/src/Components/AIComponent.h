@@ -5,7 +5,8 @@
 struct AIComponent {
 	Rigidbody* body;
 	ISteeringBehavior* behavior; //maybe make this multiple behaviors and call them all?
-	float maxAccel;
+	float maxAccel = 20;
+	float maxAngular = 300;
 
 	inline void update(float dt) {
 		//Clamp to max accel

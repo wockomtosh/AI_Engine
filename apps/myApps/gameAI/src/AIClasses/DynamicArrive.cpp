@@ -1,4 +1,5 @@
 #include "DynamicArrive.h"
+#include <math.h>
 
 DynamicArrive::DynamicArrive(AIComponent* self, Vector2 target) :
 	self(self), target(target)
@@ -13,9 +14,49 @@ DynamicArrive::DynamicArrive(AIComponent* self, Vector2 target, float slowRadius
 
 DynamicArrive::~DynamicArrive()  {}
 
+float lookWhereYouAreGoing(AIComponent* self, float slowRadius, float targetRadius, float timeToTargetRotation)
+{
+	float targetOrientation = self->body->getOrientationOfMovement();
+	float orientationDist = targetOrientation - self->body->orientation;
+	float targetSpeedDirection = 1;
+
+	//Account for different directions that give the shortest rotation
+	if (orientationDist > 180 || (orientationDist < 0 && orientationDist > -180))
+	{
+		targetSpeedDirection = -1;
+	}
+
+	float targetAccel;
+
+	//TODO SPLIT THIS OUT INTO SOMETHING, A STATIC FUNCTION???
+
+	orientationDist = fabsf(orientationDist);
+
+	if (orientationDist > slowRadius)
+	{
+		//Just rotate at max accel in the correct direction
+		targetAccel = targetSpeedDirection * self->maxAngular;
+	}
+	else if (orientationDist <= targetRadius)
+	{
+		//When we're inside the targetRadius we're targeting 0 speed
+		targetAccel = (0 - self->body->rotation) / timeToTargetRotation;
+	}
+	else
+	{
+		//When we're inside the slow radius calculate target speed and match that
+		float speedScalingFactor = orientationDist / slowRadius;
+		float targetSpeed = targetSpeedDirection * speedScalingFactor * self->body->maxRotation;
+		targetAccel = (targetSpeed - self->body->rotation) / timeToTargetRotation;
+	}	
+	return targetAccel;
+}
+
 Acceleration DynamicArrive::getSteering()
 {
-	//TODO orient in the direction of travel
+	//TODO swap this for something different
+	float angular = lookWhereYouAreGoing(self, 20, 2, .1);
+
 	Vector2 targetAccel;
 	Vector2 targetVector = target - self->body->position;
 	float distance = targetVector.getMagnitude();
@@ -37,5 +78,5 @@ Acceleration DynamicArrive::getSteering()
 		Vector2 targetVelocity = targetVector.getVectorWithMagnitude(targetSpeed);
 		targetAccel = (targetVelocity - self->body->velocity) / timeToTargetVelocity;
 	}
-	return Acceleration(targetAccel, 0);
+	return Acceleration(targetAccel, angular);
 }
