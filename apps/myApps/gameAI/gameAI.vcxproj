@@ -110,6 +110,8 @@
     <ClCompile Include="src\AIClasses\DynamicArrive2.cpp" />
     <ClCompile Include="src\AIClasses\DynamicSeek.cpp" />
     <ClCompile Include="src\AIClasses\DynamicWander.cpp" />
+    <ClCompile Include="src\AIClasses\DynamicWander2.cpp" />
+    <ClCompile Include="src\AIClasses\DynamicWander3.cpp" />
     <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
     <ClCompile Include="src\Components\Rigidbody.cpp" />
     <ClCompile Include="src\DataTypes\Vector2.cpp" />
@@ -124,6 +126,8 @@
     <ClInclude Include="src\AIClasses\DynamicArrive2.h" />
     <ClInclude Include="src\AIClasses\DynamicSeek.h" />
     <ClInclude Include="src\AIClasses\DynamicWander.h" />
+    <ClInclude Include="src\AIClasses\DynamicWander2.h" />
+    <ClInclude Include="src\AIClasses\DynamicWander3.h" />
     <ClInclude Include="src\AIClasses\KinematicSeek.h" />
     <ClInclude Include="src\AIClasses\ISteeringBehavior.h" />
     <ClInclude Include="src\Components\AIComponent.h" />

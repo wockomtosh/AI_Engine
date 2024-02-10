@@ -2,14 +2,6 @@
 #include <math.h>
 #include "DynamicAlign.h"
 
-DynamicArrive2::DynamicArrive2(AIComponent* self, Vector2 target) :
-	self(self), target(target)
-{
-	slowRadius = 100;
-	targetRadius = 10;
-	timeToTargetVelocity = .5;
-}
-
 DynamicArrive2::DynamicArrive2(AIComponent* self, Vector2 target, float slowRadius, float targetRadius, float timeToTargetVelocity) :
 	self(self), target(target), slowRadius(slowRadius), targetRadius(targetRadius), timeToTargetVelocity(timeToTargetVelocity) {}
 
@@ -35,7 +27,7 @@ Acceleration DynamicArrive2::getSteering()
 	else
 	{
 		//When we're inside the slow radius calculate target velocity and match that
-		float speedScalingFactor = distance / slowRadius;
+		float speedScalingFactor = distance * distance / (slowRadius * slowRadius);
 		float targetSpeed = speedScalingFactor * self->body->maxSpeed;
 		Vector2 targetVelocity = targetVector.getVectorWithMagnitude(targetSpeed);
 		targetAccel = (targetVelocity - self->body->velocity) / timeToTargetVelocity;

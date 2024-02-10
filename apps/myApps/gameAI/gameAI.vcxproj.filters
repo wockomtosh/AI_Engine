@@ -37,6 +37,12 @@
     <ClCompile Include="src\AIClasses\DynamicWander.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicWander2.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicWander3.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -99,6 +105,12 @@
       <Filter>src\DataTypes</Filter>
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicWander.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicWander2.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicWander3.h">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
   </ItemGroup>

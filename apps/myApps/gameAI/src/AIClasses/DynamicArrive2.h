@@ -10,8 +10,7 @@ class DynamicArrive2 : public ISteeringBehavior {
 	float timeToTargetVelocity;
 
 public:
-	DynamicArrive2(AIComponent* self, Vector2 target);
-	DynamicArrive2(AIComponent* self, Vector2 target, float slowRadius, float targetRadius, float timeToTargetVelocity);
+	DynamicArrive2(AIComponent* self, Vector2 target, float slowRadius = 100, float targetRadius = 10, float timeToTargetVelocity = .5);
 	~DynamicArrive2();
 	Acceleration getSteering();
 };

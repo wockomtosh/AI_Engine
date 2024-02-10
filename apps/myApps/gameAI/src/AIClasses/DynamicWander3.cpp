@@ -1,15 +1,15 @@
-#include "DynamicWander.h"
+#include "DynamicWander3.h"
 #include "DynamicAlign.h"
 #include <random>
 #include <iostream>
 
-DynamicWander::DynamicWander(AIComponent* self, float wanderOffset, float wanderRadius, float wanderRate) :
+DynamicWander3::DynamicWander3(AIComponent* self, float wanderOffset, float wanderRadius, float wanderRate) :
 	self(self), wanderOffset(wanderOffset), wanderRadius(wanderRadius), wanderRate(wanderRate) 
 {
 	seek = nullptr;
 }
 
-DynamicWander::~DynamicWander() {}
+DynamicWander3::~DynamicWander3() {}
 
 float randFloat(float max = 1)
 {
@@ -21,9 +21,14 @@ float randomBinomial()
 	return randFloat() - randFloat();
 }
 
-Acceleration DynamicWander::getSteering()
+Acceleration DynamicWander3::getSteering()
 {
-	Vector2 forward = Vector2::getUnitVectorFromAngle(self->body->orientation);
+	Vector2 forward = self->body->velocity.normalize();
+	
+	if (forward.isWithinRangeOf(Vector2(), .01, .01))
+	{
+		forward = Vector2::Up;
+	}
 	
 	Vector2 wanderAreaCenter = self->body->position + (forward * wanderOffset);
 
@@ -41,8 +46,9 @@ Acceleration DynamicWander::getSteering()
 	//Seek the location, but align to that location differently
 	seek = new DynamicSeek(wanderTargetPosition, self, false);
 	Acceleration steering = seek->getSteering();
+	steering.angular = DynamicAlign::lookWhereYouAreGoing(self, 5, .5, .1);
 
-	steering.angular = DynamicAlign::face(self, wanderTargetPosition, 1, .5, .1);
+	//steering.angular = DynamicAlign::face(self, wanderTargetPosition, 1, .5, .1);
 
 	return steering;
 }

@@ -8,6 +8,8 @@
 #include "AIClasses/DynamicArrive.h"
 #include "AIClasses/DynamicArrive2.h"
 #include "AIClasses/DynamicWander.h"
+#include "AIClasses/DynamicWander2.h"
+#include "AIClasses/DynamicWander3.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -22,7 +24,7 @@ AISystem* AI;
 std::vector<Rigidbody*> boids;
 
 std::vector<Rigidbody*> breadcrumbs;
-const int MAX_BREADCRUMBS = 30;
+const int MAX_BREADCRUMBS = 50;
 float breadcrumbTimer = 0;
 float breadcrumbInterval = 1;
 
@@ -176,6 +178,54 @@ void setupWander1()
 	}
 }
 
+void setupWander2()
+{
+	displayMode = 6;
+
+	boids = std::vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	boids[0]->position = Vector2(500, 400);
+	AIComponent* ai = new AIComponent(boids[0], 20, 100);
+	ai->behavior = new DynamicWander2(ai);
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
+void setupWander3()
+{
+	displayMode = 7;
+
+	boids = std::vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	boids[0]->position = Vector2(500, 400);
+	AIComponent* ai = new AIComponent(boids[0], 20, 100);
+	ai->behavior = new DynamicWander3(ai);
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
 void ofApp::setup(){
 	boid.load("images/boid.png");
 	breadcrumb.load("images/breadcrumb.png");
@@ -190,7 +240,7 @@ void ofApp::setup(){
 	//Setup breadcrumbs
 	breadcrumbs = std::vector<Rigidbody*>();
 
-	setupWander1();
+	setupWander3();
 
 	//TODO find memory leaks?
 }
@@ -255,15 +305,12 @@ void ofApp::keyPressed(int key){
 		break;
 	case '5':
 		setupWander1();
-		//Wander1
 		break;
 	case '6':
-		displayMode = 6;
-		//Wander2
+		setupWander2();
 		break;
 	case '7':
-		displayMode = 7;
-		//Wander3
+		setupWander3();
 		break;
 	case '8':
 		displayMode = 8;
@@ -303,6 +350,10 @@ void ofApp::mousePressed(int x, int y, int button){
 		case 3:
 			delete AI->getAIObjects()[0]->behavior;
 			AI->getAIObjects()[0]->behavior = new DynamicArrive(AI->getAIObjects()[0], clickTarget);
+			break;
+		case 4:
+			delete AI->getAIObjects()[0]->behavior;
+			AI->getAIObjects()[0]->behavior = new DynamicArrive2(AI->getAIObjects()[0], clickTarget);
 			break;
 		}
 	}
