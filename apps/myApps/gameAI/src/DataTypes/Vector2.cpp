@@ -117,9 +117,19 @@ Vector2 operator+(Vector2 lhs, Vector2 rhs)
 	return Vector2(lhs.getX() + rhs.getX(), lhs.getY() + rhs.getY());
 }
 
+Vector2 operator+(Vector2 lhs, float rhs)
+{
+	return Vector2(lhs.x + rhs, lhs.y + rhs);
+}
+
 Vector2 operator-(Vector2 lhs, Vector2 rhs)
 {
 	return Vector2(lhs.getX() - rhs.getX(), lhs.getY() - rhs.getY());
+}
+
+Vector2 operator-(Vector2 lhs, float rhs)
+{
+	return Vector2(lhs.x - rhs, lhs.y - rhs);
 }
 
 Vector2 operator*(Vector2 lhs, Vector2 rhs)
@@ -145,6 +155,14 @@ Vector2 operator*(float lhs, Vector2 rhs)
 Vector2 operator/(Vector2 lhs, float rhs)
 {
 	return Vector2(lhs.getX() / rhs, lhs.getY() / rhs);
+}
+
+Vector2 Vector2::getVectorFromAngle(float degrees)
+{
+	//for cosf and sinf they assume 0 is pointing to the right, so we need to adjust
+	float adjustedDegrees = degrees - 90;
+	float radians = degrees * 3.14159 / 180;
+	return Vector2(cosf(radians), sinf(radians));
 }
 
 const Vector2 Vector2::Up = Vector2(0.0, 1.0);

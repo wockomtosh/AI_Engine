@@ -26,3 +26,8 @@ void AISystem::replaceAIObjects(std::vector<AIComponent*> newAIObjects)
 {
 	aiObjects = newAIObjects;
 }
+
+void AISystem::addAIObject(AIComponent* object)
+{
+	aiObjects.push_back(object);
+}

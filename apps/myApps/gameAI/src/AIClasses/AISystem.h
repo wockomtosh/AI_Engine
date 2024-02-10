@@ -15,4 +15,5 @@ public:
 	std::vector<AIComponent*> getAIObjects();
 
 	void replaceAIObjects(std::vector<AIComponent*> newAIObjects);
+	void addAIObject(AIComponent* object);
 };

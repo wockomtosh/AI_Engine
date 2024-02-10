@@ -31,6 +31,12 @@
     <ClCompile Include="src\AIClasses\DynamicAlign.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicArrive2.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicWander.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -84,6 +90,15 @@
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicAlign.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicArrive2.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTypes\Orientation.h">
+      <Filter>src\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicWander.h">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
   </ItemGroup>

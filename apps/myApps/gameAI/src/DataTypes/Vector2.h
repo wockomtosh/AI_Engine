@@ -38,6 +38,8 @@ public:
 
 	~Vector2() {}
 
+	static Vector2 getVectorFromAngle(float degrees);
+
 	static const Vector2 Up;
 	static const Vector2 Down;
 	static const Vector2 Left;
@@ -46,7 +48,9 @@ public:
 };
 
 Vector2 operator+(Vector2 lhs, Vector2 rhs);
+Vector2 operator+(Vector2 lhs, float rhs);
 Vector2 operator-(Vector2 lhs, Vector2 rhs);
+Vector2 operator-(Vector2 lhs, float rhs);
 Vector2 operator*(Vector2 lhs, Vector2 rhs);
 Vector2 operator/(Vector2 lhs, Vector2 rhs);
 Vector2 operator*(Vector2 lhs, float rhs);

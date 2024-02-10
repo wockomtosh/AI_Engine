@@ -1,10 +1,13 @@
 #include "ofApp.h"
+#include <vector>
 #include "Renderer/Renderer.h"
 #include "Components/Rigidbody.h"
 #include "AIClasses/AISystem.h"
 #include "AIClasses/KinematicSeek.h"
 #include "AIClasses/DynamicSeek.h"
 #include "AIClasses/DynamicArrive.h"
+#include "AIClasses/DynamicArrive2.h"
+#include "AIClasses/DynamicWander.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -48,7 +51,7 @@ void setupKinematic()
 	displayMode = 1;
 
 	//Single boid setup
-	boids = vector<Rigidbody*>();
+	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
 	//kinematic seek setup
@@ -61,20 +64,18 @@ void setupSeek()
 	displayMode = 2;
 
 	//Single boid setup
-	boids = vector<Rigidbody*>();
+	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
 	//dynamic seek setup
 	boids[0]->position = Vector2(80, 700);
-	AIComponent* ai = new AIComponent();
-	ai->body = boids[0];
+	AIComponent* ai = new AIComponent(boids[0]);
 	Vector2 target = clickTarget;
 	if (target == Vector2::NULL_VECTOR)
 	{
 		target = Vector2(300, 300);
 	}
 	ai->behavior = new DynamicSeek(target, ai);
-	ai->maxAccel = 20;
 
 	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
 	aiObjects.push_back(ai);
@@ -94,20 +95,18 @@ void setupArrive1()
 	displayMode = 3;
 
 	//Single boid setup
-	boids = vector<Rigidbody*>();
+	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
 	//dynamic arrive setup
 	boids[0]->position = Vector2(80, 700);
-	AIComponent* ai = new AIComponent();
-	ai->body = boids[0];
+	AIComponent* ai = new AIComponent(boids[0]);
 	Vector2 target = clickTarget;
 	if (target == Vector2::NULL_VECTOR)
 	{
 		target = Vector2(300, 300);
 	}
 	ai->behavior = new DynamicArrive(ai, target);
-	ai->maxAccel = 20;
 
 	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
 	aiObjects.push_back(ai);
@@ -127,20 +126,42 @@ void setupArrive2()
 	displayMode = 4;
 
 	//Single boid setup
-	boids = vector<Rigidbody*>();
+	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
 	//dynamic arrive setup
 	boids[0]->position = Vector2(80, 700);
-	AIComponent* ai = new AIComponent();
-	ai->body = boids[0];
+	AIComponent* ai = new AIComponent(boids[0]);
 	Vector2 target = clickTarget;
 	if (target == Vector2::NULL_VECTOR)
 	{
 		target = Vector2(300, 300);
 	}
-	ai->behavior = new DynamicArrive(ai, target);
-	ai->maxAccel = 20;
+	ai->behavior = new DynamicArrive2(ai, target);
+
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+	aiObjects.push_back(ai);
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+}
+
+void setupWander1()
+{
+	displayMode = 5;
+
+	boids = std::vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+
+	boids[0]->position = Vector2(500, 400);
+	AIComponent* ai = new AIComponent(boids[0], 20, 100);
+	ai->behavior = new DynamicWander(ai);
 
 	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
 	aiObjects.push_back(ai);
@@ -163,10 +184,13 @@ void ofApp::setup(){
 	//Start tick
 	QueryPerformanceCounter((LARGE_INTEGER*) &prevTime);
 
-	//Setup breadcrumbs
-	breadcrumbs = vector<Rigidbody*>();
+	//Get random seed
+	srand(time(NULL));
 
-	setupArrive1();
+	//Setup breadcrumbs
+	breadcrumbs = std::vector<Rigidbody*>();
+
+	setupWander1();
 
 	//TODO find memory leaks?
 }
@@ -230,7 +254,7 @@ void ofApp::keyPressed(int key){
 		setupArrive2();
 		break;
 	case '5':
-		displayMode = 5;
+		setupWander1();
 		//Wander1
 		break;
 	case '6':

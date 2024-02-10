@@ -20,4 +20,8 @@ public:
 	//Later I should maybe add the getMovementOrientation() into here
 	static float lookWhereYouAreGoing(AIComponent* self, float slowRadius, float targetRadius, float timeToTargetRotation);
 
+	static float face(AIComponent* self, Vector2 target, float slowRadius, float targetRadius, float timeToTargetRotation);
+
+private:
+	static float align(AIComponent* self, float targetOrientation, float slowRadius, float targetRadius, float timeToTargetRotation);
 };
