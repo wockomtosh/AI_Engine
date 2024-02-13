@@ -48,7 +48,5 @@ Acceleration DynamicWander3::getSteering()
 	Acceleration steering = seek->getSteering();
 	steering.angular = DynamicAlign::lookWhereYouAreGoing(self, 5, .5, .1);
 
-	//steering.angular = DynamicAlign::face(self, wanderTargetPosition, 1, .5, .1);
-
 	return steering;
 }

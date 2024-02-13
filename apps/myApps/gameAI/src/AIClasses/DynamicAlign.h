@@ -18,10 +18,10 @@ public:
 	//Basically a static version of getSteering that I want so I can combine this more easily with other movement behaviors. 
 	//I might alter this later based on how my architecture changes, but for now this is what I'm doing.
 	//Later I should maybe add the getMovementOrientation() into here
-	static float lookWhereYouAreGoing(AIComponent* self, float slowRadius, float targetRadius, float timeToTargetRotation);
+	static float lookWhereYouAreGoing(AIComponent* self, float slowRadius = 20, float targetRadius = 2, float timeToTargetRotation = .1);
 
-	static float face(AIComponent* self, Vector2 target, float slowRadius, float targetRadius, float timeToTargetRotation);
+	static float face(AIComponent* self, Vector2 target, float slowRadius = 20, float targetRadius = 2, float timeToTargetRotation = .1);
 
 private:
-	static float align(AIComponent* self, float targetOrientation, float slowRadius, float targetRadius, float timeToTargetRotation);
+	static float align(AIComponent* self, float targetOrientation, float slowRadius = 20, float targetRadius = 2, float timeToTargetRotation = .1);
 };

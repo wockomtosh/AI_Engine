@@ -19,29 +19,41 @@
     <ClCompile Include="src\Components\Rigidbody.cpp">
       <Filter>src\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\DynamicArrive.cpp">
+    <ClCompile Include="src\AIClasses\DynamicFlocking.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\DynamicSeek.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AIClasses\KinematicSeek.cpp">
+    <ClCompile Include="src\AIClasses\DynamicSeparation.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicAlign.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicArrive.cpp">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicArrive2.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicSeek.cpp">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicVelocityMatch.cpp">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\KinematicSeek.cpp">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicWander.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicWander2.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicWander3.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicEvade.cpp">
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +75,12 @@
     <Filter Include="src\AIClasses\SteeringClasses">
       <UniqueIdentifier>{cc191380-c59b-4362-98c7-1a2058670e5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\AIClasses\SteeringClasses\BasicBehaviors">
+      <UniqueIdentifier>{dcebd10e-e336-460a-b22b-92b615bb3fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\SteeringClasses\AdvancedBehaviors">
+      <UniqueIdentifier>{d3e8dba3-ea20-4aba-9e6e-8402371f9dbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -83,35 +101,47 @@
     <ClInclude Include="src\Components\AIComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicArrive.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicSeek.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\KinematicSeek.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
     <ClInclude Include="src\AIClasses\ISteeringBehavior.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicAlign.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicArrive2.h">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
     <ClInclude Include="src\DataTypes\Orientation.h">
       <Filter>src\DataTypes</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicWander.h">
+    <ClInclude Include="src\AIClasses\DynamicFlocking.h">
       <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicSeparation.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicAlign.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicArrive.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicArrive2.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicSeek.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicVelocityMatch.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\KinematicSeek.h">
+      <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicWander.h">
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicWander2.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicWander3.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicEvade.h">
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,11 @@
 #include "AIClasses/DynamicWander.h"
 #include "AIClasses/DynamicWander2.h"
 #include "AIClasses/DynamicWander3.h"
+#include "AIClasses/DynamicFlocking.h"
 
 ofImage boid;
 ofImage breadcrumb;
+ofImage leaderBoid;
 
 uint64_t prevTime = 0;
 float dt = 0;
@@ -22,6 +24,7 @@ KinematicSeek* kSeek;
 AISystem* AI;
 
 std::vector<Rigidbody*> boids;
+Rigidbody* flockLeader;
 
 std::vector<Rigidbody*> breadcrumbs;
 const int MAX_BREADCRUMBS = 50;
@@ -100,7 +103,7 @@ void setupArrive1()
 	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
-	//dynamic arrive setup
+	//dynamic arriveWeight setup
 	boids[0]->position = Vector2(80, 700);
 	AIComponent* ai = new AIComponent(boids[0]);
 	Vector2 target = clickTarget;
@@ -131,7 +134,7 @@ void setupArrive2()
 	boids = std::vector<Rigidbody*>();
 	boids.push_back(new Rigidbody());
 
-	//dynamic arrive setup
+	//dynamic arriveWeight setup
 	boids[0]->position = Vector2(80, 700);
 	AIComponent* ai = new AIComponent(boids[0]);
 	Vector2 target = clickTarget;
@@ -226,9 +229,73 @@ void setupWander3()
 	}
 }
 
+void setupFlocking()
+{
+	displayMode = 8;
+
+	boids = std::vector<Rigidbody*>();
+	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+
+	//Setup leader
+	flockLeader = new Rigidbody();
+	flockLeader->position = Vector2(500, 400);
+	AIComponent* leaderAI = new AIComponent(flockLeader, 20, 100);
+	leaderAI->behavior = new DynamicWander(leaderAI);
+	aiObjects.push_back(leaderAI);
+
+	//Setup flock (flockSize doesn't include leader)
+	int flockSize = 5;
+	for (int i = 0; i < flockSize; i++)
+	{
+		Rigidbody* newBoid = new Rigidbody();
+		boids.push_back(newBoid);
+		//TODO: Have them start in better positions than this
+		newBoid->position = Vector2(500, 400);
+
+		//Don't setup behavior yet since they'll all need to be given the flocking behavior, but that flocking behavior needs a reference to all of them.
+		AIComponent* ai = new AIComponent(newBoid, 20, 100);
+		aiObjects.push_back(ai);
+	}
+
+	//In a separate loop so we can pass in the whole vector. We may be able to do this in the first loop but I'm not gonna risk it for now
+	for (int i = 0; i < aiObjects.size(); i++)
+	{
+		//Give everything except the leader the flocking behavior
+		if (aiObjects[i]->behavior == nullptr)
+		{
+			/*aiObjects[i]->behavior = new DynamicWander(aiObjects[i]);*/
+			aiObjects[i]->behavior = new DynamicFlocking(aiObjects[i], aiObjects);
+		}
+	}
+
+	if (AI)
+	{
+		AI->replaceAIObjects(aiObjects);
+	}
+	else
+	{
+		AI = new AISystem(aiObjects);
+	}
+
+	//Distinguish the leaderBoid
+	//Right now this iterates over every pixel so that it can ignore the transparent pixels.
+	for (int i = 0; i < leaderBoid.getWidth(); i++)
+	{
+		for (int j = 0; j < leaderBoid.getHeight(); j++)
+		{
+			if (leaderBoid.getPixels().getColor(i, j) == ofColor(0, 0, 0))
+			{
+				leaderBoid.setColor(i, j, ofColor(0, 255, 0));
+			}
+		}
+	}
+	leaderBoid.update();
+}
+
 void ofApp::setup(){
 	boid.load("images/boid.png");
 	breadcrumb.load("images/breadcrumb.png");
+	leaderBoid.load("images/boid.png");
 	std::cout << "Press keys 1-8 to select that part of the assignment\n";
 
 	//Start tick
@@ -240,7 +307,7 @@ void ofApp::setup(){
 	//Setup breadcrumbs
 	breadcrumbs = std::vector<Rigidbody*>();
 
-	setupWander3();
+	setupFlocking();
 
 	//TODO find memory leaks?
 }
@@ -264,8 +331,19 @@ void ofApp::update(){
 		breadcrumbTimer = 0;
 
 		Rigidbody* newCrumb = new Rigidbody();
-		newCrumb->position = boids[0]->position;
-		newCrumb->orientation = boids[0]->orientation;
+
+		//Track the leader when flocking
+		if (displayMode == 8)
+		{
+			newCrumb->position = flockLeader->position;
+			newCrumb->orientation = flockLeader->orientation;
+		}
+		else
+		{
+			newCrumb->position = boids[0]->position;
+			newCrumb->orientation = boids[0]->orientation;
+		}
+		
 		breadcrumbs.push_back(newCrumb);
 
 		//overwrite old breadcrumbs
@@ -285,6 +363,11 @@ void ofApp::draw(){
 
 	for (int i = 0; i < boids.size(); i++) {
 		Renderer::draw(boid, boids[i]);
+	}
+
+	//Render leader separately when flocking. Later if I do a renderComponent that holds a sprite this will be nicer
+	if (displayMode == 8) {
+		Renderer::draw(leaderBoid, flockLeader);
 	}
 }
 
@@ -313,8 +396,7 @@ void ofApp::keyPressed(int key){
 		setupWander3();
 		break;
 	case '8':
-		displayMode = 8;
-		//Flocking
+		setupFlocking();
 		break;
 	}
 }
@@ -389,17 +471,3 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
-
-//Testing how to change the color of a boid for later. 
-	//Right now this iterates over every pixel so that it can ignore the transparent pixels.
-	/*for (int i = 0; i < boid.getWidth(); i++)
-	{
-		for (int j = 0; j < boid.getHeight(); j++)
-		{
-			if (boid.getPixels().getColor(i, j) == ofColor(0, 0, 0))
-			{
-				boid.setColor(i, j, ofColor(255, 255, 255));
-			}
-		}
-	}
-	boid.update();*/

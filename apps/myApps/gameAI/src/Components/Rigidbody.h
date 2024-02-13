@@ -10,6 +10,11 @@ struct Acceleration {
 	Vector2 linear;
 	float angular;
 	Acceleration(Vector2 linear, float angular) : linear(linear), angular(angular) {}
+	Acceleration()
+	{
+		linear = Vector2();
+		angular = 0;
+	}
 };
 
 struct Rigidbody {
