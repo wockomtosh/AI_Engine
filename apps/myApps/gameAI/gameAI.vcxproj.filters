@@ -22,9 +22,6 @@
     <ClCompile Include="src\AIClasses\DynamicFlocking.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\DynamicSeparation.cpp">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicAlign.cpp">
       <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\DynamicEvade.cpp">
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicSeparation.cpp">
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,9 +110,6 @@
     <ClInclude Include="src\AIClasses\DynamicFlocking.h">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\DynamicSeparation.h">
-      <Filter>src\AIClasses\SteeringClasses</Filter>
-    </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicAlign.h">
       <Filter>src\AIClasses\SteeringClasses\BasicBehaviors</Filter>
     </ClInclude>
@@ -141,6 +138,9 @@
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicEvade.h">
+      <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicSeparation.h">
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include "ISteeringBehavior.h"
 #include "../Components/AIComponent.h"
 #include "DynamicArrive.h"
@@ -36,7 +37,7 @@ class DynamicFlocking : public ISteeringBehavior {
 	DynamicSeparation* separationBehavior;
 
 public:
-	DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight = 1, float arriveWeight = .8, float velocityMatchWeight = .6);
+	DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight = 5000, float arriveWeight = .8, float velocityMatchWeight = .6);
 	~DynamicFlocking();
 
 	Acceleration getSteering();

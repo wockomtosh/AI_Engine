@@ -3,7 +3,10 @@
 DynamicFlocking::DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight, float arriveWeight, float velocityMatchWeight) :
 	self(self), flock(flock), separationWeight(separationWeight), arriveWeight(arriveWeight), velocityMatchWeight(velocityMatchWeight)
 {
-	separationBehavior = new DynamicSeparation(); //TODO: Construct separationBehavior
+	std::vector<AIComponent*> flockExceptSelf = flock; //TODO exclude self
+	flockExceptSelf.erase(std::remove(flockExceptSelf.begin(), flockExceptSelf.end(), self));
+
+	separationBehavior = new DynamicSeparation(self, flockExceptSelf); 
 }
 
 DynamicFlocking::~DynamicFlocking()
@@ -27,7 +30,7 @@ Acceleration DynamicFlocking::getSteering()
 	centerOfFlock /= flock.size();
 	flockVelocity /= flock.size();
 
-	Vector2 arriveOutput = DynamicArrive::arrive(self, centerOfFlock);	
+	Vector2 arriveOutput = DynamicArrive::arrive(self, centerOfFlock, 10, 10, .1);	
 	Vector2 velocityMatchOutput = DynamicVelocityMatch::velocityMatch(self, flockVelocity);
 
 	float angular = DynamicAlign::lookWhereYouAreGoing(self);

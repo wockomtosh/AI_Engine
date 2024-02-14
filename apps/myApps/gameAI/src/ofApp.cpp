@@ -26,8 +26,8 @@ AISystem* AI;
 std::vector<Rigidbody*> boids;
 Rigidbody* flockLeader;
 
+#define MAX_BREADCRUMBS 0
 std::vector<Rigidbody*> breadcrumbs;
-const int MAX_BREADCRUMBS = 50;
 float breadcrumbTimer = 0;
 float breadcrumbInterval = 1;
 
@@ -250,7 +250,7 @@ void setupFlocking()
 		Rigidbody* newBoid = new Rigidbody();
 		boids.push_back(newBoid);
 		//TODO: Have them start in better positions than this
-		newBoid->position = Vector2(500, 400);
+		newBoid->position = Vector2(100 * i, 100 * i);
 
 		//Don't setup behavior yet since they'll all need to be given the flocking behavior, but that flocking behavior needs a reference to all of them.
 		AIComponent* ai = new AIComponent(newBoid, 20, 100);
@@ -265,6 +265,7 @@ void setupFlocking()
 		{
 			/*aiObjects[i]->behavior = new DynamicWander(aiObjects[i]);*/
 			aiObjects[i]->behavior = new DynamicFlocking(aiObjects[i], aiObjects);
+			//aiObjects[i]->behavior = new DynamicEvade(aiObjects[i], aiObjects[0]->body, 400);
 		}
 	}
 

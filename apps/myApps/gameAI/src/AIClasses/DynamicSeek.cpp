@@ -24,3 +24,10 @@ Acceleration DynamicSeek::getSteering()
 	seekVector *= self->maxAccel;
 	return Acceleration(seekVector, angular);
 }
+
+Vector2 DynamicSeek::seek(Vector2 target, AIComponent* self)
+{
+	Vector2 seekVector = target - self->body->position;
+	seekVector *= self->maxAccel;
+	return seekVector;
+}

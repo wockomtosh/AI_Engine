@@ -11,4 +11,6 @@ public:
 	DynamicSeek(Vector2 target, AIComponent* self, bool lookWhereYouAreGoing = true);
 	~DynamicSeek();
 	Acceleration getSteering();
+
+	static Vector2 seek(Vector2 target, AIComponent* self);
 };
