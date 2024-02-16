@@ -44,7 +44,9 @@ Vector2 DynamicEvade::evade(AIComponent* self, Rigidbody* evadeTarget, float eva
 
 	if (distanceToTarget < evadeRadius)
 	{
-		float repulsion = decay / (distanceToTarget * distanceToTarget);
+		//Inverse square patter works great if you're less than 1. So let's scale it down
+		float adjustedDistance = 1 - ((evadeRadius - distanceToTarget) / evadeRadius);
+		float repulsion = decay / (adjustedDistance * adjustedDistance);
 
 		fleeVector = DynamicSeek::seek(evadeTarget->position, self) * -1 * repulsion;
 	}

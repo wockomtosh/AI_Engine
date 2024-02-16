@@ -8,6 +8,8 @@
 #include "DynamicSeparation.h"
 #include "DynamicAlign.h"
 
+#define FLOCK_LEADER "flockLeader"
+
 //Do I want these? Maybe later. Maybe useful just as a location to define a bunch of values?
 //struct SeparationParams {
 //	float weight = 1;
@@ -31,13 +33,13 @@ class DynamicFlocking : public ISteeringBehavior {
 	AIComponent* self;
 	std::vector<AIComponent*> flock;
 	float separationWeight;
-	float arriveWeight;
+	float seekWeight;
 	float velocityMatchWeight;
 
 	DynamicSeparation* separationBehavior;
 
 public:
-	DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight = 5000, float arriveWeight = .8, float velocityMatchWeight = .6);
+	DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight = 1, float seekWeight = .8, float velocityMatchWeight = .2);
 	~DynamicFlocking();
 
 	Acceleration getSteering();

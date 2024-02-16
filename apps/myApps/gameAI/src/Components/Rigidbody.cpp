@@ -43,6 +43,24 @@ void Rigidbody::update(float dt, Acceleration acceleration) {
 		position.y = WINDOW_HEIGHT;
 	}
 
+	//ANOTHER OPTION: Just don't let them pass the edges.
+	//if (position.x > WINDOW_WIDTH)
+	//{
+	//	position.x = WINDOW_WIDTH;
+	//}
+	//else if (position.x < 0)
+	//{
+	//	position.x = 0;
+	//}
+	//if (position.y > WINDOW_HEIGHT)
+	//{
+	//	position.y = WINDOW_HEIGHT;
+	//}
+	//else if (position.y < 0)
+	//{
+	//	position.y = 0;
+	//}
+
 	orientation = Orientation::clampOrientation(orientation);
 }
 

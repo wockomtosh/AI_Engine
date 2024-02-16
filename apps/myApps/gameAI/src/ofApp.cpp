@@ -26,7 +26,7 @@ AISystem* AI;
 std::vector<Rigidbody*> boids;
 Rigidbody* flockLeader;
 
-#define MAX_BREADCRUMBS 0
+#define MAX_BREADCRUMBS 50
 std::vector<Rigidbody*> breadcrumbs;
 float breadcrumbTimer = 0;
 float breadcrumbInterval = 1;
@@ -241,23 +241,23 @@ void setupFlocking()
 	flockLeader->position = Vector2(500, 400);
 	AIComponent* leaderAI = new AIComponent(flockLeader, 20, 100);
 	leaderAI->behavior = new DynamicWander(leaderAI);
+	leaderAI->tag = FLOCK_LEADER;
 	aiObjects.push_back(leaderAI);
 
 	//Setup flock (flockSize doesn't include leader)
-	int flockSize = 5;
+	int flockSize = 15;
 	for (int i = 0; i < flockSize; i++)
 	{
 		Rigidbody* newBoid = new Rigidbody();
 		boids.push_back(newBoid);
-		//TODO: Have them start in better positions than this
 		newBoid->position = Vector2(100 * i, 100 * i);
 
 		//Don't setup behavior yet since they'll all need to be given the flocking behavior, but that flocking behavior needs a reference to all of them.
-		AIComponent* ai = new AIComponent(newBoid, 20, 100);
+		AIComponent* ai = new AIComponent(newBoid, 20, 300);
 		aiObjects.push_back(ai);
 	}
 
-	//In a separate loop so we can pass in the whole vector. We may be able to do this in the first loop but I'm not gonna risk it for now
+	//In a separate loop so we can pass in the whole aiObjects vector. We may be able to do this in the first loop but I'm not gonna risk it for now
 	for (int i = 0; i < aiObjects.size(); i++)
 	{
 		//Give everything except the leader the flocking behavior
@@ -268,6 +268,8 @@ void setupFlocking()
 			//aiObjects[i]->behavior = new DynamicEvade(aiObjects[i], aiObjects[0]->body, 400);
 		}
 	}
+
+	//leaderAI->behavior = new DynamicFlocking(leaderAI, aiObjects);
 
 	if (AI)
 	{

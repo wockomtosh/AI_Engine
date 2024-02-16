@@ -8,9 +8,9 @@ class DynamicVelocityMatch : public ISteeringBehavior {
 	float timeToTargetVelocity;
 
 public:
-	DynamicVelocityMatch(AIComponent* self, Vector2 targetVelocity, float timeToTargetVelocity = .5);
+	DynamicVelocityMatch(AIComponent* self, Vector2 targetVelocity, float timeToTargetVelocity = .1);
 	~DynamicVelocityMatch();
 	Acceleration getSteering();
 
-	static Vector2 velocityMatch(AIComponent* self, Vector2 targetVelocity, float timeToTargetVelocity = .5);
+	static Vector2 velocityMatch(AIComponent* self, Vector2 targetVelocity, float timeToTargetVelocity = .1);
 };

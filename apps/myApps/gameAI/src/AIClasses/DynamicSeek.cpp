@@ -27,6 +27,8 @@ Acceleration DynamicSeek::getSteering()
 
 Vector2 DynamicSeek::seek(Vector2 target, AIComponent* self)
 {
+	//I think this implicitly scales with distance. That wasn't intended at first, but it actually works really well.
+	//But because of that, my other behaviors need to account for things like that.
 	Vector2 seekVector = target - self->body->position;
 	seekVector *= self->maxAccel;
 	return seekVector;
