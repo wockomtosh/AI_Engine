@@ -15,3 +15,14 @@ void Renderer::draw(ofImage sprite, Rigidbody* body)
 
 	ofPopMatrix();
 }
+
+void Renderer::drawAABB(ofImage sprite, AABB* box)
+{
+	ofPushMatrix();
+	ofTranslate(box->center.x, box->center.y);
+
+	//Offset the location to the center
+	sprite.draw(-sprite.getWidth() / 2, -sprite.getHeight() / 2);
+
+	ofPopMatrix();
+}

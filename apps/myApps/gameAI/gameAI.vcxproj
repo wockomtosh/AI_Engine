@@ -110,6 +110,7 @@
     <ClCompile Include="src\AIClasses\DynamicArrive2.cpp" />
     <ClCompile Include="src\AIClasses\DynamicEvade.cpp" />
     <ClCompile Include="src\AIClasses\DynamicFlocking.cpp" />
+    <ClCompile Include="src\AIClasses\DynamicPathfollow.cpp" />
     <ClCompile Include="src\AIClasses\DynamicSeek.cpp" />
     <ClCompile Include="src\AIClasses\DynamicSeparation.cpp" />
     <ClCompile Include="src\AIClasses\DynamicVelocityMatch.cpp" />
@@ -117,6 +118,12 @@
     <ClCompile Include="src\AIClasses\DynamicWander2.cpp" />
     <ClCompile Include="src\AIClasses\DynamicWander3.cpp" />
     <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\Graph\TileGraph.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\HandmadeHeuristic.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\ManhattanHeuristic.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\Pathfinder.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.cpp" />
     <ClCompile Include="src\Components\Rigidbody.cpp" />
     <ClCompile Include="src\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -130,6 +137,7 @@
     <ClInclude Include="src\AIClasses\DynamicArrive2.h" />
     <ClInclude Include="src\AIClasses\DynamicEvade.h" />
     <ClInclude Include="src\AIClasses\DynamicFlocking.h" />
+    <ClInclude Include="src\AIClasses\DynamicPathfollow.h" />
     <ClInclude Include="src\AIClasses\DynamicSeek.h" />
     <ClInclude Include="src\AIClasses\DynamicSeparation.h" />
     <ClInclude Include="src\AIClasses\DynamicVelocityMatch.h" />
@@ -138,7 +146,18 @@
     <ClInclude Include="src\AIClasses\DynamicWander3.h" />
     <ClInclude Include="src\AIClasses\KinematicSeek.h" />
     <ClInclude Include="src\AIClasses\ISteeringBehavior.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\ChebyshevHeuristic.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\DijkstraHeuristic.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\DirectedWeightedEdge.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\TileGraph.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\HandmadeHeuristic.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\Heuristic.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\ManhattanHeuristic.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\Pathfinder.h" />
+    <ClInclude Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.h" />
     <ClInclude Include="src\Components\AIComponent.h" />
+    <ClInclude Include="src\Components\AxisAlignedBoundingBox.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
     <ClInclude Include="src\DataTypes\Orientation.h" />
     <ClInclude Include="src\DataTypes\Vector2.h" />

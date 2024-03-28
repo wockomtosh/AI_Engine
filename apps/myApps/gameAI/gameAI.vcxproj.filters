@@ -55,6 +55,25 @@
     <ClCompile Include="src\AIClasses\DynamicSeparation.cpp">
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\Pathfinder.cpp">
+      <Filter>src\AIClasses\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.cpp">
+      <Filter>src\AIClasses\Pathfinding\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\HandmadeHeuristic.cpp">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.cpp">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\Graph\TileGraph.cpp">
+      <Filter>src\AIClasses\Pathfinding\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DynamicPathfollow.cpp">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Pathfinding\ManhattanHeuristic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -80,6 +99,15 @@
     </Filter>
     <Filter Include="src\AIClasses\SteeringClasses\AdvancedBehaviors">
       <UniqueIdentifier>{d3e8dba3-ea20-4aba-9e6e-8402371f9dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\Pathfinding">
+      <UniqueIdentifier>{67a77090-ca9e-489e-abd3-f3935973bfa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\Pathfinding\Graph">
+      <UniqueIdentifier>{bbf4661e-6f6d-45fc-bee7-3d9c301c1ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\Pathfinding\Heuristic">
+      <UniqueIdentifier>{c33e82d3-5740-4765-9549-8d768e6b28d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +170,42 @@
     </ClInclude>
     <ClInclude Include="src\AIClasses\DynamicSeparation.h">
       <Filter>src\AIClasses\SteeringClasses\AdvancedBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\Pathfinder.h">
+      <Filter>src\AIClasses\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.h">
+      <Filter>src\AIClasses\Pathfinding\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\DirectedWeightedEdge.h">
+      <Filter>src\AIClasses\Pathfinding\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\DijkstraHeuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\HandmadeHeuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\Heuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\Graph\TileGraph.h">
+      <Filter>src\AIClasses\Pathfinding\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\AxisAlignedBoundingBox.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicPathfollow.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\ManhattanHeuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Pathfinding\ChebyshevHeuristic.h">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
