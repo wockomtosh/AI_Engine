@@ -73,7 +73,9 @@
     <ClCompile Include="src\AIClasses\DynamicPathfollow.cpp">
       <Filter>src\AIClasses\SteeringClasses</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIClasses\Pathfinding\ManhattanHeuristic.cpp" />
+    <ClCompile Include="src\AIClasses\Pathfinding\ManhattanHeuristic.cpp">
+      <Filter>src\AIClasses\Pathfinding\Heuristic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
