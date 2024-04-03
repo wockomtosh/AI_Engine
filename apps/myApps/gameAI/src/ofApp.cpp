@@ -74,31 +74,6 @@ float getPerformanceCheckResult()
 
 //--------------------------------------------------------------
 
-void testPathfinding()
-{
-	DirectedGraph* homeGraph = &DirectedGraph::generateHandmadeGraph();
-
-	startPerformanceCheck();
-	Pathfinder::findPath(12, 2, homeGraph, nullptr, true);
-	std::cout << "Small graph, Dijkstra's: " << getPerformanceCheckResult() << std::endl;
-
-	startPerformanceCheck();
-	Pathfinder::findPath(12, 2, homeGraph, new HandmadeHeuristic(16), true);
-	std::cout << "Small graph, handmade distance heuristic: " << getPerformanceCheckResult() << std::endl;
-
-	startPerformanceCheck();
-	Pathfinder::findPath(12, 2, homeGraph, new SmallerGraphHeuristic(16), true);
-	std::cout << "Small graph, smaller graph heuristic: " << getPerformanceCheckResult() << std::endl;
-
-	startPerformanceCheck();
-	DirectedGraph* largeGraph = &DirectedGraph::generateRandomGraph(10000);
-	std::cout << "Generating 10000 node graph: " << getPerformanceCheckResult() << std::endl;
-
-	startPerformanceCheck();
-	Pathfinder::findPath(0, 5000, largeGraph, nullptr, true);
-	std::cout << "10000 node graph, Dijkstra's: " << getPerformanceCheckResult() << std::endl;
-}
-
 void setupObstacles()
 {
 	obstacles = std::vector<AABB*>();
@@ -122,11 +97,11 @@ void setupObstacles()
 	obstacles.push_back(new AABB(Vector2(500, 200), obstExtents));
 
 	//Column 2
-	obstacles.push_back(new AABB(Vector2(800, 600), obstExtents));
-	obstacles.push_back(new AABB(Vector2(800, 500), obstExtents));
-	obstacles.push_back(new AABB(Vector2(800, 400), obstExtents));
-	obstacles.push_back(new AABB(Vector2(800, 300), obstExtents));
-	obstacles.push_back(new AABB(Vector2(800, 200), obstExtents));
+	//obstacles.push_back(new AABB(Vector2(800, 600), obstExtents));
+	//obstacles.push_back(new AABB(Vector2(800, 500), obstExtents));
+	//obstacles.push_back(new AABB(Vector2(800, 400), obstExtents));
+	//obstacles.push_back(new AABB(Vector2(800, 300), obstExtents));
+	//obstacles.push_back(new AABB(Vector2(800, 200), obstExtents));
 }
 
 void createTileGraph()
@@ -179,9 +154,6 @@ void setupPathfollow()
 		AI = new AISystem(aiObjects);
 	}
 
-	setupObstacles();
-	createTileGraph();
-
 	if (clickTarget != Vector2::NULL_VECTOR)
 	{
 		getNewClickTargetPath();
@@ -203,30 +175,32 @@ void ofApp::setup(){
 	//Setup breadcrumbs
 	breadcrumbs = std::vector<Rigidbody*>();
 
-	//testPathfinding();
+	setupObstacles();
+	createTileGraph();
 
 	setupPathfollow();
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-	getTick();
-
-	switch (displayMode) {
-	default:
-		AI->update(dt);
-		break;
-	}
-
+void updateBreadcrumbs()
+{
 	breadcrumbTimer += dt;
 	if (breadcrumbTimer > breadcrumbInterval) {
 		breadcrumbTimer = 0;
 
+		//TODO: Make new crumbs for the monster
 		Rigidbody* newCrumb = new Rigidbody();
 		newCrumb->position = boids[0]->position;
 		newCrumb->orientation = boids[0]->orientation;
-		
 		breadcrumbs.push_back(newCrumb);
+
+		if (boids.size() > 1)
+		{
+			Rigidbody* newCrumb = new Rigidbody();
+			newCrumb->position = boids[1]->position;
+			newCrumb->orientation = boids[1]->orientation;
+			breadcrumbs.push_back(newCrumb);
+		}
 
 		//overwrite old breadcrumbs
 		if (breadcrumbs.size() >= MAX_BREADCRUMBS) {
@@ -235,12 +209,22 @@ void ofApp::update(){
 	}
 }
 
+void ofApp::update(){
+	getTick();
+
+	switch (displayMode) {
+	default:
+		AI->update(dt);
+		updateBreadcrumbs();
+		break;
+	}	
+}
+
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofBackground(ofColor(180, 180, 180));
 
 	//TODO: Set up render components and have the renderer just iterate through those on its own.
-	//TODO: How would breadcrumbs/boids lists work for ^^? 
 	for (int i = 0; i < breadcrumbs.size(); i++) {
 		Renderer::draw(breadcrumb, breadcrumbs[i]);
 	}

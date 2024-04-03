@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 */openFrameworksCompiled/*
+=======
+openframeworksLib_debug.lib
+openframeworksLib_release.lib
+projectGenerator.exe
+>>>>>>> 0a548c4f (Updating gitignore for the problem files, starting on decision trees and things, initial setup)
 
 ###########################
 # ignore generated binaries
