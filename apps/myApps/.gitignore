@@ -16,7 +16,7 @@
 # Mono auto generated files
 mono_crash.*
 
-!bin/data
+!*/bin/data
 
 # Build results
 [Dd]ebug/
