@@ -40,7 +40,7 @@ std::vector<DirectedWeightedEdge> Pathfinder::findPath(int start, int goal, Dire
 
 	//Initialize fringe
 	NodeRecord startRecord = NodeRecord(start, DirectedWeightedEdge::NULL_EDGE, 0, heuristic->estimate(start));
-	//Turns out std::priority_queue id pretty useless for our needs, so we need to make a heap from a vector.
+	//Turns out std::priority_queue is pretty useless for our needs, so we need to make a heap from a vector.
 	std::vector<NodeRecord> openList;
 	heapPush(openList, startRecord);
 

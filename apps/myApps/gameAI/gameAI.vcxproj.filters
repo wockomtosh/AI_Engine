@@ -83,6 +83,9 @@
       <Filter>src\AIClasses\DecisionMaking\DecisionTree</Filter>
     </ClCompile>
     <ClCompile Include="src\AIClasses\MovementAction.cpp" />
+    <ClCompile Include="src\AIClasses\ActionManager.cpp">
+      <Filter>src\AIClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -121,14 +124,14 @@
     <Filter Include="src\AIClasses\DecisionMaking">
       <UniqueIdentifier>{089a26c5-5dd1-4ba5-98d7-801a389d2f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AIClasses\DecisionMaking\Actions">
-      <UniqueIdentifier>{b7872adf-df99-478f-b367-283ca7472ab0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\AIClasses\DecisionMaking\DecisionTree">
       <UniqueIdentifier>{49b6d586-b6b5-4432-b1d6-3761a853e952}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\AIClasses\DecisionMaking\DecisionTree\Decisions">
       <UniqueIdentifier>{281be4e4-57a5-4185-bd71-b784d394ba82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\Actions">
+      <UniqueIdentifier>{b7872adf-df99-478f-b367-283ca7472ab0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="src\AIClasses\Decision.h">
       <Filter>src\AIClasses\DecisionMaking\DecisionTree\Decisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\ActionManager.h">
+      <Filter>src\AIClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

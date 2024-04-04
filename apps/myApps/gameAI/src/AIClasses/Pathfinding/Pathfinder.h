@@ -25,8 +25,7 @@ struct NodeRecord {
 	bool operator<(NodeRecord other);
 	bool operator==(NodeRecord other);
 
-	//used for std::make_heap and related functions
-	//TODO: Does this work or do I need a separate struct/std::function for this?
+	//used for std::push_heap and related functions
 	bool operator()(const NodeRecord& a, const NodeRecord& b);
 };
 
