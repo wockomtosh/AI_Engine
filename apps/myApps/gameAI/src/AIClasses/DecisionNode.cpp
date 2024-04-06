@@ -7,7 +7,7 @@ DecisionTreeNode* DecisionNode::makeDecision()
 {
 	if (decision->isTrue())
 	{
-		return left;
+		return left->makeDecision();
 	}
-	return right;
+	return right->makeDecision();
 }

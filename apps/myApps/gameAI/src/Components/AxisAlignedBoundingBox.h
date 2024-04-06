@@ -14,4 +14,11 @@ struct AABB {
 		return !(x > center.x + extents.x || x < center.x - extents.x
 			|| y > center.y + extents.y || y < center.y - extents.y);
 	}
+	bool isPointWithinBox(Vector2 point)
+	{
+		float x = point.x;
+		float y = point.y;
+		return !(x > center.x + extents.x || x < center.x - extents.x
+			|| y > center.y + extents.y || y < center.y - extents.y);
+	}
 };

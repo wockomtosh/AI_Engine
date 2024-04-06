@@ -24,4 +24,5 @@ public:
 	DynamicPathfollow(AIComponent* self, TileGraph* graph, std::vector<DirectedWeightedEdge> path, float sinkRadius = 16, float targetRadius = 10, float timeToTargetVelocity = .1);
 	~DynamicPathfollow() {}
 	Acceleration getSteering();
+	std::string getName() { return "DynamicPathfollow"; }
 };

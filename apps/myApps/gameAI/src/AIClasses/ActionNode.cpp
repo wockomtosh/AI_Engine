@@ -10,5 +10,5 @@ DecisionTreeNode* ActionNode::makeDecision()
 
 Action* ActionNode::getAction()
 {
-	return action;
+	return this->action;
 }

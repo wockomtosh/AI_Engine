@@ -86,6 +86,12 @@
     <ClCompile Include="src\AIClasses\ActionManager.cpp">
       <Filter>src\AIClasses</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\Blackboard.cpp">
+      <Filter>src\AIClasses\DecisionMaking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\EvadeNearestAction.cpp">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -251,6 +257,36 @@
     </ClInclude>
     <ClInclude Include="src\AIClasses\ActionManager.h">
       <Filter>src\AIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DynamicEmpty.h">
+      <Filter>src\AIClasses\SteeringClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Blackboard.h">
+      <Filter>src\AIClasses\DecisionMaking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DecisionTree.h">
+      <Filter>src\AIClasses\DecisionMaking\DecisionTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\IsMovingDecision.h">
+      <Filter>src\AIClasses\DecisionMaking\DecisionTree\Decisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\TooCloseDecision.h">
+      <Filter>src\AIClasses\DecisionMaking\DecisionTree\Decisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\AIObject.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\WanderTimeDecision.h">
+      <Filter>src\AIClasses\DecisionMaking\DecisionTree\Decisions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\WanderAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\PathfindHomeAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\EvadeNearestAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

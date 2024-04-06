@@ -7,20 +7,25 @@ Acceleration DynamicPathfollow::getSteering()
 {
 	float angular = DynamicAlign::lookWhereYouAreGoing(self, 20, 2, .1);
 
-	Vector2 target = graph->getWorldCoordinateFromNode(path[pathIndex].sink);
-	Vector2 targetVector = target - self->body->position;
-	float distance = targetVector.getMagnitude();
-	//If we made it to a node then we should immediately move to the next node
-	if (distance < sinkRadius)
+	//Sometimes this crashes, I think it's when the path is being changed
+	if (path.size() > 0)
 	{
-		//Only move to the next node if we haven't made it to the end yet.
-		if (pathIndex != path.size() - 1)
+		Vector2 target = graph->getWorldCoordinateFromNode(path[pathIndex].sink);
+		Vector2 targetVector = target - self->body->position;
+		float distance = targetVector.getMagnitude();
+		//If we made it to a node then we should immediately move to the next node
+		if (distance < sinkRadius)
 		{
-			pathIndex++;
-			target = graph->getWorldCoordinateFromNode(path[pathIndex].sink);
+			//Only move to the next node if we haven't made it to the end yet.
+			if (pathIndex != path.size() - 1)
+			{
+				pathIndex++;
+				target = graph->getWorldCoordinateFromNode(path[pathIndex].sink);
+			}
+
 		}
-		
+
+		return Acceleration(DynamicArrive::arrive(self, target, targetRadius, targetRadius, timeToTargetVelocity), angular);
 	}
-	
-	return Acceleration(DynamicArrive::arrive(self, target, targetRadius, targetRadius, timeToTargetVelocity), angular);
+	return Acceleration(Vector2(), 0);
 }

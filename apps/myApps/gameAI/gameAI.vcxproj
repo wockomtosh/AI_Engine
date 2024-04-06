@@ -107,6 +107,7 @@
     <ClCompile Include="src\AIClasses\ActionManager.cpp" />
     <ClCompile Include="src\AIClasses\ActionNode.cpp" />
     <ClCompile Include="src\AIClasses\AISystem.cpp" />
+    <ClCompile Include="src\AIClasses\Blackboard.cpp" />
     <ClCompile Include="src\AIClasses\DecisionNode.cpp" />
     <ClCompile Include="src\AIClasses\DynamicAlign.cpp" />
     <ClCompile Include="src\AIClasses\DynamicArrive.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="src\AIClasses\DynamicWander.cpp" />
     <ClCompile Include="src\AIClasses\DynamicWander2.cpp" />
     <ClCompile Include="src\AIClasses\DynamicWander3.cpp" />
+    <ClCompile Include="src\AIClasses\EvadeNearestAction.cpp" />
     <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
     <ClCompile Include="src\AIClasses\MovementAction.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.cpp" />
@@ -139,12 +141,15 @@
     <ClInclude Include="src\AIClasses\ActionManager.h" />
     <ClInclude Include="src\AIClasses\ActionNode.h" />
     <ClInclude Include="src\AIClasses\AISystem.h" />
+    <ClInclude Include="src\AIClasses\Blackboard.h" />
     <ClInclude Include="src\AIClasses\Decision.h" />
     <ClInclude Include="src\AIClasses\DecisionNode.h" />
+    <ClInclude Include="src\AIClasses\DecisionTree.h" />
     <ClInclude Include="src\AIClasses\DecisionTreeNode.h" />
     <ClInclude Include="src\AIClasses\DynamicAlign.h" />
     <ClInclude Include="src\AIClasses\DynamicArrive.h" />
     <ClInclude Include="src\AIClasses\DynamicArrive2.h" />
+    <ClInclude Include="src\AIClasses\DynamicEmpty.h" />
     <ClInclude Include="src\AIClasses\DynamicEvade.h" />
     <ClInclude Include="src\AIClasses\DynamicFlocking.h" />
     <ClInclude Include="src\AIClasses\DynamicPathfollow.h" />
@@ -154,9 +159,12 @@
     <ClInclude Include="src\AIClasses\DynamicWander.h" />
     <ClInclude Include="src\AIClasses\DynamicWander2.h" />
     <ClInclude Include="src\AIClasses\DynamicWander3.h" />
+    <ClInclude Include="src\AIClasses\EvadeNearestAction.h" />
+    <ClInclude Include="src\AIClasses\IsMovingDecision.h" />
     <ClInclude Include="src\AIClasses\KinematicSeek.h" />
     <ClInclude Include="src\AIClasses\ISteeringBehavior.h" />
     <ClInclude Include="src\AIClasses\MovementAction.h" />
+    <ClInclude Include="src\AIClasses\PathfindHomeAction.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\ChebyshevHeuristic.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\DijkstraHeuristic.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.h" />
@@ -167,7 +175,11 @@
     <ClInclude Include="src\AIClasses\Pathfinding\ManhattanHeuristic.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\Pathfinder.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.h" />
+    <ClInclude Include="src\AIClasses\TooCloseDecision.h" />
+    <ClInclude Include="src\AIClasses\WanderAction.h" />
+    <ClInclude Include="src\AIClasses\WanderTimeDecision.h" />
     <ClInclude Include="src\Components\AIComponent.h" />
+    <ClInclude Include="src\Components\AIObject.h" />
     <ClInclude Include="src\Components\AxisAlignedBoundingBox.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
     <ClInclude Include="src\DataTypes\Orientation.h" />
