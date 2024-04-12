@@ -3,32 +3,36 @@
 
 //TODO: probably eventually make my own priority queue so I can have it how I'd like. Or split these out into a util file.
 //Wrapper for std::push_heap
-void heapPush(std::vector<Action*>& list, Action* value)
+void heapPush(std::vector<std::shared_ptr<Action>>& list, std::shared_ptr<Action> value)
 {
 	list.push_back(value);
 	std::push_heap(list.begin(), list.end());
 }
 
 //Wrapper for std::pop_heap
-Action* heapPop(std::vector<Action*>& list)
+std::shared_ptr<Action> heapPop(std::vector<std::shared_ptr<Action>>& list)
 {
 	std::pop_heap(list.begin(), list.end());
-	Action* returnValue = list.back();
+	std::shared_ptr<Action> returnValue = list.back();
 	list.pop_back();
 
 	return returnValue;
 }
 
 //Wrapper for std::make_heap
-void makeHeap(std::vector<Action*>& list)
+void makeHeap(std::vector<std::shared_ptr<Action>>& list)
 {
 	std::make_heap(list.begin(), list.end());
 }
 
-void ActionManager::scheduleAction(Action* action)
+void ActionManager::scheduleAction(std::shared_ptr<Action> action)
 {
-	action->queuedTime = 0;
-	heapPush(pending, action);
+	//Don't schedule empty actions
+	if (action->type != "")
+	{
+		action->queuedTime = 0;
+		heapPush(pending, action);
+	}
 }
 
 void ActionManager::update(float dt)
@@ -60,7 +64,7 @@ void ActionManager::checkInterrupts()
 	//There are issues with this type of loop since it doesn't happen in priority order, but I'll worry about that later.
 	for (auto i = pending.begin(); i != pending.end(); )
 	{
-		Action* action = *i;
+		std::shared_ptr<Action> action = *i;
 		if (action->canInterrupt())
 		{
 			if (action->priority >= activeHighestPriority)
@@ -82,20 +86,20 @@ void ActionManager::checkInterrupts()
 void ActionManager::promoteQueuedToActive()
 {
 	//To iterate we're popping everything off of pending. If it isn't being promoted it's put back onto pendingCopy
-	std::vector<Action*> pendingCopy;
+	std::vector<std::shared_ptr<Action>> pendingCopy;
 	int numPending = pending.size();
 	for (int i = 0; i < numPending; i++)
 	{
-		Action* curAction = heapPop(pending);
+		std::shared_ptr<Action> curAction = heapPop(pending);
 		if (curAction->queuedTime > curAction->expiryTime)
 		{
 			continue;
 		}
 
 		bool canPromote = true;
-		for (Action* activeAction : active)
+		for (std::shared_ptr<Action> activeAction : active)
 		{
-			if (!curAction->canDoBoth(activeAction))
+			if (!curAction->canDoBoth(activeAction.get()))
 			{
 				canPromote = false;
 				break;
@@ -122,11 +126,12 @@ void ActionManager::runActive()
 	//A special kind of for loop that lets me conditionally erase things.
 	for (auto i = active.begin(); i != active.end(); )
 	{
-		Action* action = *i;
+		std::shared_ptr<Action> action = *i;
 		action->execute();
 		if (action->isComplete())
 		{
-			//TODO: delete action here? Or elsewhere?
+			//I converted to shared pointers specifically for this part so we can delete the action here
+			//But other places that still need it (especially Behavior Trees) can still have it
 			i = active.erase(i);
 		}
 		else

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -106,9 +106,13 @@
   <ItemGroup>
     <ClCompile Include="src\AIClasses\ActionManager.cpp" />
     <ClCompile Include="src\AIClasses\ActionNode.cpp" />
+    <ClCompile Include="src\AIClasses\ActionTask.cpp" />
     <ClCompile Include="src\AIClasses\AISystem.cpp" />
+    <ClCompile Include="src\AIClasses\BehaviorTree.cpp" />
     <ClCompile Include="src\AIClasses\Blackboard.cpp" />
+    <ClCompile Include="src\AIClasses\ConditionTask.cpp" />
     <ClCompile Include="src\AIClasses\DecisionNode.cpp" />
+    <ClCompile Include="src\AIClasses\DecoratorTask.cpp" />
     <ClCompile Include="src\AIClasses\DynamicAlign.cpp" />
     <ClCompile Include="src\AIClasses\DynamicArrive.cpp" />
     <ClCompile Include="src\AIClasses\DynamicArrive2.cpp" />
@@ -130,6 +134,9 @@
     <ClCompile Include="src\AIClasses\Pathfinding\ManhattanHeuristic.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\Pathfinder.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.cpp" />
+    <ClCompile Include="src\AIClasses\SelectorTask.cpp" />
+    <ClCompile Include="src\AIClasses\SequenceTask.cpp" />
+    <ClCompile Include="src\AIClasses\Tick.cpp" />
     <ClCompile Include="src\Components\Rigidbody.cpp" />
     <ClCompile Include="src\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -140,12 +147,18 @@
     <ClInclude Include="src\AIClasses\Action.h" />
     <ClInclude Include="src\AIClasses\ActionManager.h" />
     <ClInclude Include="src\AIClasses\ActionNode.h" />
+    <ClInclude Include="src\AIClasses\ActionTask.h" />
     <ClInclude Include="src\AIClasses\AISystem.h" />
+    <ClInclude Include="src\AIClasses\BehaviorTree.h" />
     <ClInclude Include="src\AIClasses\Blackboard.h" />
+    <ClInclude Include="src\AIClasses\Condition.h" />
+    <ClInclude Include="src\AIClasses\ConditionTask.h" />
     <ClInclude Include="src\AIClasses\Decision.h" />
     <ClInclude Include="src\AIClasses\DecisionNode.h" />
     <ClInclude Include="src\AIClasses\DecisionTree.h" />
     <ClInclude Include="src\AIClasses\DecisionTreeNode.h" />
+    <ClInclude Include="src\AIClasses\Decoration.h" />
+    <ClInclude Include="src\AIClasses\DecoratorTask.h" />
     <ClInclude Include="src\AIClasses\DynamicAlign.h" />
     <ClInclude Include="src\AIClasses\DynamicArrive.h" />
     <ClInclude Include="src\AIClasses\DynamicArrive2.h" />
@@ -175,7 +188,13 @@
     <ClInclude Include="src\AIClasses\Pathfinding\ManhattanHeuristic.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\Pathfinder.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\SmallerGraphHeuristic.h" />
+    <ClInclude Include="src\AIClasses\SelectorTask.h" />
+    <ClInclude Include="src\AIClasses\SequenceTask.h" />
+    <ClInclude Include="src\AIClasses\Task.h" />
+    <ClInclude Include="src\AIClasses\Tick.h" />
     <ClInclude Include="src\AIClasses\TooCloseDecision.h" />
+    <ClInclude Include="src\AIClasses\UntilFailDecoration.h" />
+    <ClInclude Include="src\AIClasses\UntilFailDecorator.h" />
     <ClInclude Include="src\AIClasses\WanderAction.h" />
     <ClInclude Include="src\AIClasses\WanderTimeDecision.h" />
     <ClInclude Include="src\Components\AIComponent.h" />

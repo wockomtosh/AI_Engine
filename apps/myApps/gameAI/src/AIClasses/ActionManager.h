@@ -2,6 +2,7 @@
 #include <vector>
 #include <functional>
 #include "Action.h"
+#include <memory>
 
 //Careful not to flood the ActionManager
 //This will be implemented as if each NPC has its own ActionManager
@@ -9,12 +10,12 @@ class ActionManager {
 public:
 	ActionManager() {}
 
-	void scheduleAction(Action* action);
+	void scheduleAction(std::shared_ptr<Action> action);
 	void update(float dt);
 
 private:
-	std::vector<Action*> pending;
-	std::vector<Action*> active;
+	std::vector<std::shared_ptr<Action>> pending;
+	std::vector<std::shared_ptr<Action>> active;
 
 	//increase queued time
 	void updateActionQueuedTime(float dt);

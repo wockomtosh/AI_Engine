@@ -7,13 +7,12 @@
 //Basically this is meant to hold the root of the tree (so it can retrieve an action) and an abstraction scheme (Blackboard for my uses)
 class DecisionTree {
 	DecisionTreeNode* root;
-	Blackboard* blackboard;
 
 public:
-	DecisionTree(DecisionTreeNode* root/*, Blackboard* blackboard*/) :
-		root(root)/*, blackboard(blackboard)*/ {}
+	DecisionTree(DecisionTreeNode* root) :
+		root(root) {}
 
-	Action* makeDecision()
+	std::shared_ptr<Action> makeDecision()
 	{
 		ActionNode* action = static_cast<ActionNode*>(root->makeDecision());
 		return action->getAction();

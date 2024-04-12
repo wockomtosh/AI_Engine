@@ -1,14 +1,15 @@
 #pragma once
 #include "DecisionTreeNode.h"
 #include "Action.h"
+#include <memory>
 
 class ActionNode : public DecisionTreeNode {
-	Action* action;
+	std::shared_ptr<Action> action;
 
 public:
-	ActionNode(Action* action);
+	ActionNode(std::shared_ptr<Action> action);
 
 	DecisionTreeNode* makeDecision();
 
-	Action* getAction();
+	std::shared_ptr<Action> getAction();
 };

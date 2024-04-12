@@ -92,6 +92,27 @@
     <ClCompile Include="src\AIClasses\EvadeNearestAction.cpp">
       <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\Tick.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\ConditionTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\ActionTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\SelectorTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\SequenceTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\BehaviorTree.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\DecoratorTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -133,11 +154,26 @@
     <Filter Include="src\AIClasses\DecisionMaking\DecisionTree">
       <UniqueIdentifier>{49b6d586-b6b5-4432-b1d6-3761a853e952}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\Actions">
+      <UniqueIdentifier>{b7872adf-df99-478f-b367-283ca7472ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree">
+      <UniqueIdentifier>{ec190e36-2cde-4ff6-9a4e-dbdb1b7358cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\Tasks">
+      <UniqueIdentifier>{ae4407dc-f756-4fbe-b1b6-07f350d12cb9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\AIClasses\DecisionMaking\DecisionTree\Decisions">
       <UniqueIdentifier>{281be4e4-57a5-4185-bd71-b784d394ba82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\AIClasses\DecisionMaking\Actions">
-      <UniqueIdentifier>{b7872adf-df99-478f-b367-283ca7472ab0}</UniqueIdentifier>
+    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\Conditions">
+      <UniqueIdentifier>{e45804ac-50a3-4d35-a874-ca57a9aea4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators">
+      <UniqueIdentifier>{b236ed5f-d7c4-4a2e-8cfc-695c1a9c4ed7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED">
+      <UniqueIdentifier>{25ec4d26-efb7-4be5-9cb7-a1f3c9e76887}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +323,42 @@
     </ClInclude>
     <ClInclude Include="src\AIClasses\EvadeNearestAction.h">
       <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\BehaviorTree.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Tick.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\ActionTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\DecoratorTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Task.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\ConditionTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\SelectorTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\SequenceTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Condition.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Decoration.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\UntilFailDecoration.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\UntilFailDecorator.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

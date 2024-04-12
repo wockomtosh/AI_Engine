@@ -26,6 +26,7 @@
 #include "AIClasses/WanderAction.h"
 #include "AIClasses/PathfindHomeAction.h"
 #include "AIClasses/EvadeNearestAction.h"
+#include "AIClasses/BehaviorTree.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -52,6 +53,8 @@ Vector2 clickTarget = Vector2::NULL_VECTOR;
 Blackboard* blackboard;
 DecisionTree* decisionTree;
 ActionManager* dtManager;
+BehaviorTree* behaviorTree;
+ActionManager* btManager;
 float maxWanderTime = 5;
 
 int displayMode;
@@ -147,41 +150,12 @@ void getNewClickTargetPath()
 	ai->behavior = new DynamicPathfollow(ai, tileGraph, path, 64, 32);
 }
 
-void setupPathfollow()
-{
-	displayMode = 1;
-
-	//Single boid setup
-	boids = std::vector<Rigidbody*>();
-	boids.push_back(new Rigidbody());
-
-	boids[0]->position = Vector2(80, 700);
-	AIComponent* ai = new AIComponent(boids[0]);
-
-	ai->behavior = new DynamicEmpty();
-	
-	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
-	aiObjects.push_back(ai);
-
-	if (AI)
-	{
-		AI->replaceAIObjects(aiObjects);
-	}
-	else
-	{
-		AI = new AISystem(aiObjects);
-	}
-
-	if (clickTarget != Vector2::NULL_VECTOR)
-	{
-		getNewClickTargetPath();
-	}
-}
-
-//Generic setup for the blackboard, not sure what else is needed aside from constructor for now
 void setupBlackboard()
 {
-	blackboard = new Blackboard();
+	if (!blackboard)
+	{
+		blackboard = new Blackboard();
+	}	
 }
 
 void setupDecisionTree()
@@ -195,38 +169,26 @@ void setupDecisionTree()
 	AIComponent* ai = new AIComponent(boids[0]);
 	ai->behavior = new DynamicEmpty();
 
-	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
-	aiObjects.push_back(ai);
-
 	if (AI)
 	{
-		AI->replaceAIObjects(aiObjects);
+		AI->addAIObject(ai);
 	}
 	else
 	{
+		std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+		aiObjects.push_back(ai);
 		AI = new AISystem(aiObjects);
 	}
-
-	//if (AI)
-	//{
-	//	AI->addAIObject(ai);
-	//}
-	//else
-	//{
-	//	std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
-	//	aiObjects.push_back(ai);
-	//	AI = new AISystem(aiObjects);
-	//}
 
 	//Add our blackboard variables
 	blackboard->setGeneric("obstacles", &obstacles);
 	blackboard->setFloat("wanderTime", 0);
 
 	//Create DecisionTree
-	ActionNode* pathfindHome = new ActionNode(new PathfindHomeAction(ai, tileGraph));
-	ActionNode* emptyAction = new ActionNode(new Action());
-	ActionNode* evadeNearest = new ActionNode(new EvadeNearestAction(blackboard, ai));
-	ActionNode* wander = new ActionNode(new WanderAction(ai));
+	ActionNode* pathfindHome = new ActionNode(std::make_shared<PathfindHomeAction>(ai, tileGraph));
+	ActionNode* emptyAction = new ActionNode(std::make_shared<Action>());
+	ActionNode* evadeNearest = new ActionNode(std::make_shared<EvadeNearestAction>(blackboard, ai));
+	ActionNode* wander = new ActionNode(std::make_shared<WanderAction>(ai));
 
 	DecisionNode* wanderTime = new DecisionNode(pathfindHome, emptyAction, new WanderTimeDecision(blackboard, maxWanderTime));
 	DecisionNode* tooClose = new DecisionNode(evadeNearest, wanderTime, new TooCloseDecision(blackboard, boids[0]));
@@ -234,6 +196,11 @@ void setupDecisionTree()
 	decisionTree = new DecisionTree(isStationary);
 
 	dtManager = new ActionManager();
+}
+
+void setupBehaviorTree()
+{
+
 }
 
 void ofApp::setup(){
@@ -251,10 +218,11 @@ void ofApp::setup(){
 	//Setup breadcrumbs
 	breadcrumbs = std::vector<Rigidbody*>();
 
+	//Setup world
 	setupObstacles();
 	createTileGraph();
 
-	//setupPathfollow();
+	//Setup AI
 	setupBlackboard();
 	setupDecisionTree();
 }
@@ -303,7 +271,7 @@ void updateDecisionTreeAIController(float dt)
 
 	//The decision tree is intended to run once per tick. I also designed the actions in it to run quickly, to try to keep things consistent
 	//I also decided to let my AI system handle the movement still, so movement actions just set the behavior on that object
-	Action* newAction = decisionTree->makeDecision();
+	std::shared_ptr<Action> newAction = decisionTree->makeDecision();
 	dtManager->scheduleAction(newAction);
 	dtManager->update(dt);
 }

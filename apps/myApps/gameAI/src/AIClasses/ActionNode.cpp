@@ -1,6 +1,6 @@
 #include "ActionNode.h"
 
-ActionNode::ActionNode(Action* action) :
+ActionNode::ActionNode(std::shared_ptr<Action> action) :
 	action(action) {}
 
 DecisionTreeNode* ActionNode::makeDecision()
@@ -8,7 +8,7 @@ DecisionTreeNode* ActionNode::makeDecision()
 	return this;
 }
 
-Action* ActionNode::getAction()
+std::shared_ptr<Action> ActionNode::getAction()
 {
 	return this->action;
 }

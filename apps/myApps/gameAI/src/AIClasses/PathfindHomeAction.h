@@ -36,7 +36,7 @@ public:
 			path = Pathfinder::findPath(startNode, endNode, graph, new ManhattanHeuristic(endNode, graph));
 
 			delete self->behavior;
-			self->behavior = new DynamicPathfollow(self, graph, path, 64, 32);
+			self->behavior = new DynamicPathfollow(self, graph, path, 32, 32);
 		}
 	}
 };

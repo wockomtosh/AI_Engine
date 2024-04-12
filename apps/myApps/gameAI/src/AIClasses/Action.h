@@ -5,6 +5,7 @@ struct Action {
 	int priority = 0;
 	float queuedTime = 0;
 	float expiryTime = 1;
+	//Actions with a type of "" will not be scheduled
 	std::string type = "";
 	virtual bool canInterrupt() { return false; };
 	//By default we can do two actions at the same time. We'll see if we need to change that later.

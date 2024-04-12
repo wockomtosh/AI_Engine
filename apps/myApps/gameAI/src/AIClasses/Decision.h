@@ -5,5 +5,5 @@
 class Decision {
 
 public:
-	virtual bool isTrue() { return true; };
+	virtual bool isTrue() { return true; }
 };
