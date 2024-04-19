@@ -2,14 +2,15 @@
 #include "Action.h"
 #include "Blackboard.h"
 #include "../Components/AIComponent.h"
-#include "DynamicWander.h"
+#include "DynamicVelocityMatch.h"
 
-class WanderAction : public Action {
+class VelocityMatchAction : public Action {
 	AIComponent* self;
+	Rigidbody* target;
 
 public:
-	WanderAction(AIComponent* self) :
-		self(self) 
+	VelocityMatchAction(AIComponent* self, Rigidbody* target) :
+		self(self), target(target)
 	{
 		priority = 1;
 		type = "movement";
@@ -20,6 +21,6 @@ public:
 	void execute()
 	{
 		delete self->behavior;
-		self->behavior = new DynamicWander(self);
+		self->behavior = new DynamicVelocityMatch(self, target->velocity);
 	}
 };

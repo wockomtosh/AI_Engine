@@ -2,14 +2,14 @@
 #include "Action.h"
 #include "Blackboard.h"
 #include "../Components/AIComponent.h"
-#include "DynamicWander.h"
+#include "DynamicVelocityMatch.h"
 
-class WanderAction : public Action {
+class StayStillAction : public Action {
 	AIComponent* self;
 
 public:
-	WanderAction(AIComponent* self) :
-		self(self) 
+	StayStillAction(AIComponent* self) :
+		self(self)
 	{
 		priority = 1;
 		type = "movement";
@@ -17,9 +17,11 @@ public:
 
 	bool canDoBoth(Action* other) { return other->type != "movement"; }
 
+	bool isComplete() { return true; }
+
 	void execute()
 	{
 		delete self->behavior;
-		self->behavior = new DynamicWander(self);
+		self->behavior = new DynamicVelocityMatch(self, Vector2());
 	}
 };

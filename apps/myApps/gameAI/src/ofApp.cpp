@@ -24,9 +24,24 @@
 #include "AIClasses/TooCloseDecision.h"
 #include "AIClasses/WanderTimeDecision.h"
 #include "AIClasses/WanderAction.h"
+#include "AIClasses/SpinAction.h"
+#include "AIClasses/EatAction.h"
+#include "AIClasses/StayStillAction.h"
 #include "AIClasses/PathfindHomeAction.h"
 #include "AIClasses/EvadeNearestAction.h"
+#include "AIClasses/ChaseTargetAction.h"
+#include "AIClasses/VelocityMatchAction.h"
 #include "AIClasses/BehaviorTree.h"
+#include "AIClasses/SelectorTask.h"
+#include "AIClasses/NDSelectorTask.h"
+#include "AIClasses/SequenceTask.h"
+#include "AIClasses/ConditionTask.h"
+#include "AIClasses/ActionTask.h"
+#include "AIClasses/UntilFailDecorator.h"
+#include "AIClasses/RepeatNDecorator.h"
+#include "AIClasses/CloseToTargetCondition.h"
+#include "AIClasses/CloseToWallsCondition.h"
+#include "AIClasses/PlayerIsAliveCondition.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -55,7 +70,7 @@ DecisionTree* decisionTree;
 ActionManager* dtManager;
 BehaviorTree* behaviorTree;
 ActionManager* btManager;
-float maxWanderTime = 5;
+float maxWanderTime = 7;
 
 int displayMode;
 
@@ -200,7 +215,64 @@ void setupDecisionTree()
 
 void setupBehaviorTree()
 {
+	boids.push_back(new Rigidbody());
+	boids[1]->position = Vector2(700, 80);
+	AIComponent* ai = new AIComponent(boids[1]);
+	ai->behavior = new DynamicEmpty();
 
+	if (AI)
+	{
+		AI->addAIObject(ai);
+	}
+	else
+	{
+		std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+		aiObjects.push_back(ai);
+		AI = new AISystem(aiObjects);
+	}
+
+	//Add our blackboard variables
+	blackboard->setGeneric("character", boids[0]);
+	blackboard->setGeneric("monster", boids[1]);
+	blackboard->setGeneric("obstacles", &obstacles); //Double setting this because I won't always be using the decision tree
+	blackboard->setBool("playerIsAlive", true);
+	blackboard->setBool("victoryComplete", false);
+
+	//Create BehaviorTree
+	
+	//WALL EVASION
+	ConditionTask* tooCloseToWalls = new ConditionTask(5, new CloseToWallsCondition());
+	ActionTask* evadeWalls = new ActionTask(6, std::make_shared<EvadeNearestAction>(blackboard, ai));
+	SequenceTask* handleWalls = new SequenceTask(1, { tooCloseToWalls, evadeWalls });
+
+	//CHASING/EATING
+	ConditionTask* playerIsAlive = new ConditionTask(7, new PlayerIsAliveCondition());
+	ConditionTask* canChasePlayer = new ConditionTask(8, new CloseToTargetCondition());
+
+	ConditionTask* canEatPlayer = new ConditionTask(16, new CloseToTargetCondition(30));
+	ActionTask* eatPlayer = new ActionTask(17, std::make_shared<EatAction>(blackboard, boids[0]));
+	SequenceTask* tryEatPlayer = new SequenceTask(12, { canEatPlayer, eatPlayer });
+
+	ActionTask* chasePlayer = new ActionTask(13, std::make_shared<ChaseTargetAction>(blackboard, ai, boids[0]));
+	SelectorTask* eatOrChase = new SelectorTask(9, { tryEatPlayer, chasePlayer });
+
+	SequenceTask* handleChase = new SequenceTask(2, { playerIsAlive, canChasePlayer, eatOrChase });
+
+	//IDLE/SEARCHING
+	ActionTask* velocityMatch = new ActionTask(14, std::make_shared<VelocityMatchAction>(ai, boids[0]));
+	ActionTask* stayStill = new ActionTask(15, std::make_shared<StayStillAction>(ai));
+	NDSelectorTask* randomIdle = new NDSelectorTask(10, { velocityMatch, stayStill });
+	SequenceTask* handleIdle = new SequenceTask(3, { playerIsAlive, randomIdle });
+
+	//VICTORY
+	ActionTask* victorySpin = new ActionTask(11, std::make_shared<SpinAction>(ai));
+	RepeatNDecorator* handleVictory = new RepeatNDecorator(4, victorySpin);
+
+	SelectorTask* root = new SelectorTask(0, { handleWalls, handleChase, handleIdle, handleVictory });
+
+	behaviorTree = new BehaviorTree(root, blackboard);
+
+	btManager = new ActionManager();
 }
 
 void ofApp::setup(){
@@ -225,6 +297,7 @@ void ofApp::setup(){
 	//Setup AI
 	setupBlackboard();
 	setupDecisionTree();
+	setupBehaviorTree();
 }
 
 //--------------------------------------------------------------
@@ -276,10 +349,28 @@ void updateDecisionTreeAIController(float dt)
 	dtManager->update(dt);
 }
 
+void updateBTAIController(float dt)
+{
+	std::shared_ptr<Action> newAction = behaviorTree->makeDecision();
+	if (newAction)
+	{
+		btManager->scheduleAction(newAction);
+	}
+	btManager->update(dt);
+
+	if (blackboard->getBool("victoryComplete"))
+	{
+		AI->replaceAIObjects(std::vector<AIComponent*>());
+		setupDecisionTree();
+		setupBehaviorTree();
+	}
+}
+
 void ofApp::update(){
 	getTick();
 
 	updateDecisionTreeAIController(dt);
+	updateBTAIController(dt);
 	AI->update(dt);
 	updateBreadcrumbs();
 }

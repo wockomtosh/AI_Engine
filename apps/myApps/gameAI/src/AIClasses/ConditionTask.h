@@ -2,6 +2,7 @@
 #include "Task.h"
 #include "Condition.h"
 
+//For an alternative idea see the comment in DecoratorTask.h
 class ConditionTask : public Task {
 	Condition* condition;
 

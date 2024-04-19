@@ -5,5 +5,5 @@
 class Condition {
 
 public:
-	virtual bool isTrue(Blackboard* blackboard) { return true; }
+	virtual bool isTrue(Blackboard* blackboard) { return false; }
 };

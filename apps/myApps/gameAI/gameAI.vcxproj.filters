@@ -113,6 +113,9 @@
     <ClCompile Include="src\AIClasses\DecoratorTask.cpp">
       <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIClasses\NDSelectorTask.cpp">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -171,9 +174,6 @@
     </Filter>
     <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators">
       <UniqueIdentifier>{b236ed5f-d7c4-4a2e-8cfc-695c1a9c4ed7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED">
-      <UniqueIdentifier>{25ec4d26-efb7-4be5-9cb7-a1f3c9e76887}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -351,14 +351,38 @@
     <ClInclude Include="src\AIClasses\Condition.h">
       <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Conditions</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIClasses\Decoration.h">
-      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIClasses\UntilFailDecoration.h">
-      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\DecorationsUNUSED</Filter>
-    </ClInclude>
     <ClInclude Include="src\AIClasses\UntilFailDecorator.h">
       <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\NDSelectorTask.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\CloseToTargetCondition.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\RepeatNDecorator.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\CloseToWallsCondition.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\PlayerIsAliveCondition.h">
+      <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\EatAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\ChaseTargetAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\SpinAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\VelocityMatchAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\StayStillAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

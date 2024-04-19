@@ -3,7 +3,7 @@
 #include "../DataTypes/Orientation.h"
 
 DynamicAlign::DynamicAlign(AIComponent* self, float target) :
-	self(self), target(target)
+	self(self), target(Orientation::clampOrientation(target))
 {
 	slowRadius = 20;
 	targetRadius = 2;

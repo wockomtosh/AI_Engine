@@ -21,20 +21,22 @@ Status ActionTask::run(Tick* t)
 		t->enter(this);
 		t->execute(this);
 
-		//I need a solution for resetting my action
+		//TODO: I need a solution for resetting my action
+		//In the action manager it executes and then checks for completion
+		//Here it checks for completion first, so we need to make sure that we have a way to reset it.
+		//For now I'm adding a reset() function, but it feels sloppy
 		if (action->isComplete())
 		{
-
 			t->exit(this);
 			t->close(this);
-			//TODO: Check success on action, for now all completed actions are successes
-			status = Status::success;
+			status = action->isSuccessful() ? Status::success : Status::failure;
+			action->reset(); //reset after success check to make sure we don't change important info
 			return status;
 		}
 
 		//Check if the action was interrupted (no longer being tracked by the ActionManager)
 		//For now I'm going to count this as a failure, though it could be revised.
-		//TODO: This is sort of a hack, and I don't know if it's completely reliable.
+		//TODO: This is sort of a hack, and I don't know if it's reliable
 		//Also, in my current implementation I think the BT only has one action manager, so things probably shouldn't really get interrupted much.
 		if (action.use_count() <= 1)
 		{
@@ -49,6 +51,8 @@ Status ActionTask::run(Tick* t)
 	t->exit(this);
 	return status;
 }
+
+
 
 //WACK IDEA BELOW
 
