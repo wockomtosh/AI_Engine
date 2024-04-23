@@ -126,9 +126,11 @@
     <ClCompile Include="src\AIClasses\DynamicWander2.cpp" />
     <ClCompile Include="src\AIClasses\DynamicWander3.cpp" />
     <ClCompile Include="src\AIClasses\EvadeNearestAction.cpp" />
+    <ClCompile Include="src\AIClasses\GOAP.cpp" />
     <ClCompile Include="src\AIClasses\KinematicSeek.cpp" />
     <ClCompile Include="src\AIClasses\MovementAction.cpp" />
     <ClCompile Include="src\AIClasses\NDSelectorTask.cpp" />
+    <ClCompile Include="src\AIClasses\Operator.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\Graph\DirectedGraph.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\Graph\TileGraph.cpp" />
     <ClCompile Include="src\AIClasses\Pathfinding\HandmadeHeuristic.cpp" />
@@ -139,6 +141,7 @@
     <ClCompile Include="src\AIClasses\SequenceTask.cpp" />
     <ClCompile Include="src\AIClasses\Tick.cpp" />
     <ClCompile Include="src\Components\Rigidbody.cpp" />
+    <ClCompile Include="src\DataTypes\BitArray.cpp" />
     <ClCompile Include="src\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -177,11 +180,14 @@
     <ClInclude Include="src\AIClasses\EatAction.h" />
     <ClInclude Include="src\AIClasses\EvadeNearestAction.h" />
     <ClInclude Include="src\AIClasses\CloseToTargetCondition.h" />
+    <ClInclude Include="src\AIClasses\GOAP.h" />
     <ClInclude Include="src\AIClasses\IsMovingDecision.h" />
     <ClInclude Include="src\AIClasses\KinematicSeek.h" />
     <ClInclude Include="src\AIClasses\ISteeringBehavior.h" />
     <ClInclude Include="src\AIClasses\MovementAction.h" />
     <ClInclude Include="src\AIClasses\NDSelectorTask.h" />
+    <ClInclude Include="src\AIClasses\Operator.h" />
+    <ClInclude Include="src\AIClasses\PathfindAction.h" />
     <ClInclude Include="src\AIClasses\PathfindHomeAction.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\ChebyshevHeuristic.h" />
     <ClInclude Include="src\AIClasses\Pathfinding\DijkstraHeuristic.h" />
@@ -210,7 +216,9 @@
     <ClInclude Include="src\Components\AIObject.h" />
     <ClInclude Include="src\Components\AxisAlignedBoundingBox.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
+    <ClInclude Include="src\DataTypes\BitArray.h" />
     <ClInclude Include="src\DataTypes\Orientation.h" />
+    <ClInclude Include="src\DataTypes\Status.h" />
     <ClInclude Include="src\DataTypes\Vector2.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />

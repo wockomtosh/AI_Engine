@@ -116,6 +116,15 @@
     <ClCompile Include="src\AIClasses\NDSelectorTask.cpp">
       <Filter>src\AIClasses\DecisionMaking\BehaviorTree\Tasks</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataTypes\BitArray.cpp">
+      <Filter>src\DataTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\GOAP.cpp">
+      <Filter>src\AIClasses\DecisionMaking\GOAP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIClasses\Operator.cpp">
+      <Filter>src\AIClasses\DecisionMaking\GOAP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -174,6 +183,9 @@
     </Filter>
     <Filter Include="src\AIClasses\DecisionMaking\BehaviorTree\Tasks\Decorators">
       <UniqueIdentifier>{b236ed5f-d7c4-4a2e-8cfc-695c1a9c4ed7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AIClasses\DecisionMaking\GOAP">
+      <UniqueIdentifier>{5d19e8e6-a28d-4e79-80ea-6ba16172721e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -383,6 +395,21 @@
     </ClInclude>
     <ClInclude Include="src\AIClasses\StayStillAction.h">
       <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\GOAP.h">
+      <Filter>src\AIClasses\DecisionMaking\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTypes\BitArray.h">
+      <Filter>src\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\Operator.h">
+      <Filter>src\AIClasses\DecisionMaking\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIClasses\PathfindAction.h">
+      <Filter>src\AIClasses\DecisionMaking\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataTypes\Status.h">
+      <Filter>src\DataTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

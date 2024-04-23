@@ -3,8 +3,7 @@
 #include <memory>
 #include "Blackboard.h"
 #include "Action.h"
-
-enum Status { success, failure, running, error, none };
+#include "../DataTypes/Status.h"
 
 struct Task;
 

@@ -42,6 +42,10 @@
 #include "AIClasses/CloseToTargetCondition.h"
 #include "AIClasses/CloseToWallsCondition.h"
 #include "AIClasses/PlayerIsAliveCondition.h"
+#include "DataTypes/BitArray.h"
+#include "AIClasses/GOAP.h"
+#include "AIClasses/Operator.h"
+#include "AIClasses/PathfindAction.h"
 
 ofImage boid;
 ofImage breadcrumb;
@@ -71,6 +75,12 @@ ActionManager* dtManager;
 BehaviorTree* behaviorTree;
 ActionManager* btManager;
 float maxWanderTime = 7;
+
+GOAP* goap;
+ActionManager* goapManager;
+BitArray* goapState;
+int playerQuadIndexStart = 0;
+int monsterQuadIndexStart = 4;
 
 int displayMode;
 
@@ -175,7 +185,7 @@ void setupBlackboard()
 
 void setupDecisionTree()
 {
-	displayMode = 1;
+	displayMode = '1';
 
 	//Single boid setup
 	boids = std::vector<Rigidbody*>();
@@ -271,8 +281,223 @@ void setupBehaviorTree()
 	SelectorTask* root = new SelectorTask(0, { handleWalls, handleChase, handleIdle, handleVictory });
 
 	behaviorTree = new BehaviorTree(root, blackboard);
-
 	btManager = new ActionManager();
+}
+
+//This does pure velocity match instead of mixing with stand still
+void setupBehaviorTree2()
+{
+	boids.push_back(new Rigidbody());
+	boids[1]->position = Vector2(700, 80);
+	AIComponent* ai = new AIComponent(boids[1]);
+	ai->behavior = new DynamicEmpty();
+
+	if (AI)
+	{
+		AI->addAIObject(ai);
+	}
+	else
+	{
+		std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+		aiObjects.push_back(ai);
+		AI = new AISystem(aiObjects);
+	}
+
+	//Add our blackboard variables
+	blackboard->setGeneric("character", boids[0]);
+	blackboard->setGeneric("monster", boids[1]);
+	blackboard->setGeneric("obstacles", &obstacles); //Double setting this because I won't always be using the decision tree
+	blackboard->setBool("playerIsAlive", true);
+	blackboard->setBool("victoryComplete", false);
+
+	//Create BehaviorTree
+
+	//WALL EVASION
+	ConditionTask* tooCloseToWalls = new ConditionTask(5, new CloseToWallsCondition());
+	ActionTask* evadeWalls = new ActionTask(6, std::make_shared<EvadeNearestAction>(blackboard, ai));
+	SequenceTask* handleWalls = new SequenceTask(1, { tooCloseToWalls, evadeWalls });
+
+	//CHASING/EATING
+	ConditionTask* playerIsAlive = new ConditionTask(7, new PlayerIsAliveCondition());
+	ConditionTask* canChasePlayer = new ConditionTask(8, new CloseToTargetCondition());
+
+	ConditionTask* canEatPlayer = new ConditionTask(16, new CloseToTargetCondition(30));
+	ActionTask* eatPlayer = new ActionTask(17, std::make_shared<EatAction>(blackboard, boids[0]));
+	SequenceTask* tryEatPlayer = new SequenceTask(12, { canEatPlayer, eatPlayer });
+
+	ActionTask* chasePlayer = new ActionTask(13, std::make_shared<ChaseTargetAction>(blackboard, ai, boids[0]));
+	SelectorTask* eatOrChase = new SelectorTask(9, { tryEatPlayer, chasePlayer });
+
+	SequenceTask* handleChase = new SequenceTask(2, { playerIsAlive, canChasePlayer, eatOrChase });
+
+	//IDLE/SEARCHING
+	ActionTask* velocityMatch = new ActionTask(14, std::make_shared<VelocityMatchAction>(ai, boids[0]));
+	SequenceTask* handleIdle = new SequenceTask(3, { playerIsAlive, velocityMatch });
+
+	//VICTORY
+	ActionTask* victorySpin = new ActionTask(11, std::make_shared<SpinAction>(ai));
+	RepeatNDecorator* handleVictory = new RepeatNDecorator(4, victorySpin);
+
+	SelectorTask* root = new SelectorTask(0, { handleWalls, handleChase, handleIdle, handleVictory });
+
+	behaviorTree = new BehaviorTree(root, blackboard);
+	btManager = new ActionManager();
+}
+
+//This does wander instead of velocity match
+void setupBehaviorTree3()
+{
+	boids.push_back(new Rigidbody());
+	boids[1]->position = Vector2(700, 80);
+	AIComponent* ai = new AIComponent(boids[1]);
+	ai->behavior = new DynamicEmpty();
+
+	if (AI)
+	{
+		AI->addAIObject(ai);
+	}
+	else
+	{
+		std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+		aiObjects.push_back(ai);
+		AI = new AISystem(aiObjects);
+	}
+
+	//Add our blackboard variables
+	blackboard->setGeneric("character", boids[0]);
+	blackboard->setGeneric("monster", boids[1]);
+	blackboard->setGeneric("obstacles", &obstacles); //Double setting this because I won't always be using the decision tree
+	blackboard->setBool("playerIsAlive", true);
+	blackboard->setBool("victoryComplete", false);
+
+	//Create BehaviorTree
+
+	//WALL EVASION
+	ConditionTask* tooCloseToWalls = new ConditionTask(5, new CloseToWallsCondition());
+	ActionTask* evadeWalls = new ActionTask(6, std::make_shared<EvadeNearestAction>(blackboard, ai));
+	SequenceTask* handleWalls = new SequenceTask(1, { tooCloseToWalls, evadeWalls });
+
+	//CHASING/EATING
+	ConditionTask* playerIsAlive = new ConditionTask(7, new PlayerIsAliveCondition());
+	ConditionTask* canChasePlayer = new ConditionTask(8, new CloseToTargetCondition());
+
+	ConditionTask* canEatPlayer = new ConditionTask(16, new CloseToTargetCondition(30));
+	ActionTask* eatPlayer = new ActionTask(17, std::make_shared<EatAction>(blackboard, boids[0]));
+	SequenceTask* tryEatPlayer = new SequenceTask(12, { canEatPlayer, eatPlayer });
+
+	ActionTask* chasePlayer = new ActionTask(13, std::make_shared<ChaseTargetAction>(blackboard, ai, boids[0]));
+	SelectorTask* eatOrChase = new SelectorTask(9, { tryEatPlayer, chasePlayer });
+
+	SequenceTask* handleChase = new SequenceTask(2, { playerIsAlive, canChasePlayer, eatOrChase });
+
+	//IDLE/SEARCHING
+	ActionTask* wander = new ActionTask(14, std::make_shared<WanderAction>(ai));
+	SequenceTask* handleIdle = new SequenceTask(3, { playerIsAlive, wander });
+
+	//VICTORY
+	ActionTask* victorySpin = new ActionTask(11, std::make_shared<SpinAction>(ai));
+	RepeatNDecorator* handleVictory = new RepeatNDecorator(4, victorySpin);
+
+	SelectorTask* root = new SelectorTask(0, { handleWalls, handleChase, handleIdle, handleVictory });
+
+	behaviorTree = new BehaviorTree(root, blackboard);
+	btManager = new ActionManager();
+}
+
+void setupGOAP()
+{
+	//This has the goal of being on the opposite corner of the monster at all times
+	displayMode = '2';
+
+	//Single boid setup
+	boids = std::vector<Rigidbody*>();
+	boids.push_back(new Rigidbody());
+	boids[0]->position = Vector2(80, 700);
+	AIComponent* ai = new AIComponent(boids[0]);
+	ai->behavior = new DynamicEmpty();
+
+	if (AI)
+	{
+		AI->addAIObject(ai);
+	}
+	else
+	{
+		std::vector<AIComponent*> aiObjects = std::vector<AIComponent*>();
+		aiObjects.push_back(ai);
+		AI = new AISystem(aiObjects);
+	}
+
+	//Setup State array
+	//In this situation it's 4 bits for the monster's quadrant and 4 bits for the player's quadrant
+	goapState = new BitArray(8);
+	goapState->SetBit(playerQuadIndexStart);
+	goapState->SetBit(monsterQuadIndexStart + 2);
+	BitArray* goalState = new BitArray(*goapState);
+
+	//Create operators for moving to the 4 corners. They don't have actual preconditions
+	//They delete the entire player corner state and add their corner to the player state
+	BitArray* pathfindPreconditions = new BitArray(8);
+	BitArray* pathfindDeletedEffects = new BitArray(8);
+	pathfindDeletedEffects->SetBit(playerQuadIndexStart);
+	pathfindDeletedEffects->SetBit(playerQuadIndexStart + 1);
+	pathfindDeletedEffects->SetBit(playerQuadIndexStart + 2);
+	pathfindDeletedEffects->SetBit(playerQuadIndexStart + 3);
+
+	//TODO: Should each of these have preconditions that you have to be in an adjacent quadrant? 
+	//The hard part with that is we would need multiple preconditions or even more operators.
+	//If I were to implement this again I'd probably do virtual functions for checkPreconditions and addEffects and stuff like that.
+	std::shared_ptr<Action> pathfindQuad1 = std::make_shared<PathfindAction>(ai, Vector2(220, 570), tileGraph);
+	BitArray* addedEffects1 = new BitArray(8);
+	addedEffects1->SetBit(playerQuadIndexStart);
+	Operator* moveQuad1 = new Operator("moveQuad1", pathfindQuad1, pathfindPreconditions, addedEffects1, pathfindDeletedEffects);
+
+	std::shared_ptr<Action> pathfindQuad2 = std::make_shared<PathfindAction>(ai, Vector2(300, 25), tileGraph);
+	BitArray* addedEffects2 = new BitArray(8);
+	addedEffects2->SetBit(playerQuadIndexStart + 1);
+	Operator* moveQuad2 = new Operator("moveQuad2", pathfindQuad2, pathfindPreconditions, addedEffects2, pathfindDeletedEffects);
+
+	std::shared_ptr<Action> pathfindQuad3 = std::make_shared<PathfindAction>(ai, Vector2(775, 170), tileGraph);
+	BitArray* addedEffects3 = new BitArray(8);
+	addedEffects3->SetBit(playerQuadIndexStart + 2);
+	Operator* moveQuad3 = new Operator("moveQuad3", pathfindQuad3, pathfindPreconditions, addedEffects3, pathfindDeletedEffects);
+
+	std::shared_ptr<Action> pathfindQuad4 = std::make_shared<PathfindAction>(ai, Vector2(775, 520), tileGraph);
+	BitArray* addedEffects4 = new BitArray(8);
+	addedEffects4->SetBit(playerQuadIndexStart + 3);
+	Operator* moveQuad4 = new Operator("moveQuad4", pathfindQuad4, pathfindPreconditions, addedEffects4, pathfindDeletedEffects);
+
+	std::vector<Operator*> operators({ moveQuad1, moveQuad2, moveQuad3, moveQuad4 });
+
+	//Make the actual GOAP and make an initial plan
+	goap = new GOAP(goapState, goalState, operators);
+	goap->makePlan();
+	goapManager = new ActionManager();
+}
+
+void setupMode1()
+{
+	AI->replaceAIObjects(std::vector<AIComponent*>());
+	setupDecisionTree();
+	setupBehaviorTree();
+}
+
+void setupMode2()
+{
+	AI->replaceAIObjects(std::vector<AIComponent*>());
+	setupGOAP();
+	setupBehaviorTree3();
+}
+
+void selectSetupMode()
+{
+	switch (displayMode) {
+	case '1':
+		setupMode1();
+		break;
+	case '2':
+		setupMode2();
+		break;
+	}
 }
 
 void ofApp::setup(){
@@ -296,8 +521,8 @@ void ofApp::setup(){
 
 	//Setup AI
 	setupBlackboard();
-	setupDecisionTree();
-	setupBehaviorTree();
+	setupGOAP();
+	setupBehaviorTree3();
 }
 
 //--------------------------------------------------------------
@@ -360,16 +585,97 @@ void updateBTAIController(float dt)
 
 	if (blackboard->getBool("victoryComplete"))
 	{
-		AI->replaceAIObjects(std::vector<AIComponent*>());
-		setupDecisionTree();
-		setupBehaviorTree();
+		selectSetupMode();
 	}
+}
+
+//0-indexed, quadrants count up clockwise starting in the bottom left
+int getBoidQuadrant(Rigidbody* boid)
+{
+	if (boid->position.x > WINDOW_WIDTH / 2)
+	{
+		if (boid->position.y > WINDOW_HEIGHT / 2)
+		{
+			return 3;
+		}
+		else
+		{
+			return 2;
+		}
+	}
+	else
+	{
+		if (boid->position.y > WINDOW_HEIGHT / 2)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+}
+
+void setGoal(int monsterQuad)
+{
+	BitArray* newGoal = new BitArray(8);
+
+	//What is the opposite corner of the monster?
+	//1 goes to 3, 3 goes to 1. So we could add 2, then if it's greater than 4 we subtract 4.
+	//Remember I'm doing 0 indexed though
+	int desiredPlayerQuad = monsterQuad + 2;
+	if (desiredPlayerQuad >= 4)
+		desiredPlayerQuad -= 4;
+	newGoal->SetBit(playerQuadIndexStart + desiredPlayerQuad);
+	newGoal->SetBit(monsterQuadIndexStart + monsterQuad);
+	//std::cout << "Player: " << desiredPlayerQuad << std::endl;
+	//std::cout << "Monster: " << monsterQuad << std::endl;
+	//newGoal->print();
+
+	goap->setNewGoal(newGoal);
+}
+
+int previousMonsterQuad = 3;
+
+void updateGOAPController(float dt)
+{
+	//Get monster and player quadrants and update them
+	int curPlayerQuad = getBoidQuadrant(boids[0]);
+	int curMonsterQuad = getBoidQuadrant(boids[1]);
+
+	//Update game state for monster/player
+	//Make sure to do this first so that the planner is working with an accurate state. It took a long time to track down what was happening.
+	goapState->ClearAllBits();
+	goapState->SetBit(playerQuadIndexStart + curPlayerQuad);
+	goapState->SetBit(monsterQuadIndexStart + curMonsterQuad);
+
+	//Set a new goal if monster quadrant has changed
+	if (curMonsterQuad != previousMonsterQuad)
+	{
+		previousMonsterQuad = curMonsterQuad;
+		setGoal(curMonsterQuad);
+	}
+	
+	//Call GOAP
+	std::shared_ptr<Action> newAction = goap->followPlan();
+	if (newAction != nullptr)
+	{
+		goapManager->scheduleAction(newAction);
+	}
+	goapManager->update(dt);
 }
 
 void ofApp::update(){
 	getTick();
-
-	updateDecisionTreeAIController(dt);
+	
+	if (displayMode == '1')
+	{
+		updateDecisionTreeAIController(dt);
+	}
+	else
+	{
+		updateGOAPController(dt);
+	}
 	updateBTAIController(dt);
 	AI->update(dt);
 	updateBreadcrumbs();
@@ -395,25 +701,8 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	switch (key) {
-	case '1':
-		setupDecisionTree();
-		break;
-	case '2':
-		break;
-	case '3':
-		break;
-	case '4':
-		break;
-	case '5':
-		break;
-	case '6':
-		break;
-	case '7':
-		break;
-	case '8':
-		break;
-	}
+	displayMode = key;
+	selectSetupMode();
 }
 
 //--------------------------------------------------------------
@@ -434,16 +723,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	//Setup clickTarget
+	std::cout << "(" << x << ", " << y << ")" << std::endl;
 	clickTarget = Vector2(x, y);
 	if (AI) {
-		switch (displayMode)
-		{
-		case 1:
-			getNewClickTargetPath();
-			break;
-		case 2:
-			break;
-		}
+		getNewClickTargetPath();
 	}
 	
 }

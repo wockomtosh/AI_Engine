@@ -12,9 +12,9 @@ struct Action {
 	
 	//Actions with a type of "" will not be scheduled
 	std::string type = "";
-	virtual bool canInterrupt() { return false; };
+	virtual bool canInterrupt() { return false; }
 	//By default we can do two actions at the same time. We'll see if we need to change that later.
-	virtual bool canDoBoth(Action* other) { return true; };
+	virtual bool canDoBoth(Action* other) { return true; }
 	virtual bool isComplete() { return true; }
 	virtual bool isSuccessful() { return isComplete() ? true : false; }
 	virtual void execute() {}
