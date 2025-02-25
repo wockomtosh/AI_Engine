@@ -1,6 +1,2 @@
-PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.36.32532:TargetPlatformVersion=10.0.22621.0:
-<<<<<<< HEAD
-Debug|x64|C:\Users\jacob\assignment-2-pathfinding-wockomtosh\apps\myApps\gameAI\|
-=======
-Debug|x64|C:\Users\jacob\UFiles\assignment-3-decision-making-wockomtosh\apps\myApps\gameAI\|
->>>>>>> 0a548c4f (Updating gitignore for the problem files, starting on decision trees and things, initial setup)
+PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.38.33130:TargetPlatformVersion=10.0.26100.0:
+Debug|x64|C:\Users\jacob\UFiles\FirstYear\AIForGames\assignment-3-decision-making-wockomtosh\apps\myApps\gameAI\|
