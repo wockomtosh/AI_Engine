@@ -61,8 +61,7 @@ public:
 				status = Status::success;
 			}
 
-			//TODO: I don't actually have a way to find out if pathfinding/following failed.
-			//It definitely failed if we don't have a path though.
+			//It failed if we don't have a path.
 			if (path.size() == 0)
 			{
 				status = Status::failure;

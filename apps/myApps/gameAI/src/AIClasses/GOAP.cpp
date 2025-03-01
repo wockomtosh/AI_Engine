@@ -159,7 +159,6 @@ std::shared_ptr<Action> GOAP::followPlan()
 
 void GOAP::setNewGoal(BitArray* newGoalState)
 {
-	//TODO: should I delete goal state here or will that cause issues?
 	delete goalState;
 	goalState = newGoalState;
 	makePlan();

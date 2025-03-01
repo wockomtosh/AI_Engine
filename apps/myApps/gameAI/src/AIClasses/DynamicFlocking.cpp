@@ -3,7 +3,7 @@
 DynamicFlocking::DynamicFlocking(AIComponent* self, std::vector<AIComponent*> flock, float separationWeight, float seekWeight, float velocityMatchWeight) :
 	self(self), flock(flock), separationWeight(separationWeight), seekWeight(seekWeight), velocityMatchWeight(velocityMatchWeight)
 {
-	std::vector<AIComponent*> flockExceptSelf = flock; //TODO exclude self
+	std::vector<AIComponent*> flockExceptSelf = flock;
 	flockExceptSelf.erase(std::remove(flockExceptSelf.begin(), flockExceptSelf.end(), self));
 
 	separationBehavior = new DynamicSeparation(self, flockExceptSelf, 100); 

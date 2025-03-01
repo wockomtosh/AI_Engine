@@ -64,7 +64,6 @@ void Rigidbody::update(float dt, Acceleration acceleration) {
 	orientation = Orientation::clampOrientation(orientation);
 }
 
-//TODO: Should this be in LookWhereYouAreGoing?
 float Rigidbody::getOrientationOfMovement()
 {
 	float oMovement = atan2(velocity.y, velocity.x) * (180 / 3.1415);

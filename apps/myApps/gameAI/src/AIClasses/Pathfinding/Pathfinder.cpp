@@ -98,7 +98,6 @@ std::vector<DirectedWeightedEdge> Pathfinder::findPath(int start, int goal, Dire
 			}
 
 			//If it's unique or a better duplicate, we want to insert it.
-			//TODO: THIS DOESN'T MATCH ROGELIO'S PSEUDOCODE, DOES THIS ACTUALLY WORK?!?!? I think his pseudocode is a bit wrong, but I'm not positive on the changes to make.
 			endNodeRecord = NodeRecord(endNode, edge, g, g + h);
 			heapPush(openList, endNodeRecord);
 		}

@@ -504,7 +504,6 @@ void ofApp::setup(){
 	boid.load("images/boid.png");
 	breadcrumb.load("images/breadcrumb.png");
 	obstacle.load("images/obstacle.png");
-	//std::cout << "Press keys 1-8 to select that part of the assignment\n";
 
 	//Start tick
 	QueryPerformanceCounter((LARGE_INTEGER*) &prevTime);
@@ -685,7 +684,6 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(ofColor(180, 180, 180));
 
-	//TODO: Set up render components and have the renderer just iterate through those on its own.
 	for (int i = 0; i < breadcrumbs.size(); i++) {
 		Renderer::draw(breadcrumb, breadcrumbs[i]);
 	}

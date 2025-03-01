@@ -17,7 +17,6 @@ public:
 	TileGraph(int tileSize, int maxX, int maxY, std::vector<AABB*> obstacles);
 	~TileGraph() {}
 
-	//TODO: Clean these up to take in Vector2 instead of separate x and y, or probably an override so we can do both
 	int getNodeIndexFromNodeCoordinate(int x, int y);
 	int getNodeFromWorldCoordinate(float x, float y);
 	Vector2 getNodeCoordinateFromNode(int node);

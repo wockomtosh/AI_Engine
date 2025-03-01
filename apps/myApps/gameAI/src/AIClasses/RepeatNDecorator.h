@@ -23,7 +23,6 @@ public:
 			{
 				return Status::running;
 			}
-			//JUST FOR THE RESET NEEDED IN THE ASSIGNMENT
 			t->blackboard->setBool("victoryComplete", true);
 			return status;
 		}
